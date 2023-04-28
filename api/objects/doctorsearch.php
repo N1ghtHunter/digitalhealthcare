@@ -12,56 +12,51 @@ class DoctorSearch implements search
     }
 
     public function searchDoctors(
-        $fname = "*",
-        $lname = "*",
-        $city = "*",
-        $area = "*",
-        $specialty = "*",
-        $insurance = "*",
-        $yearsOfExperience = "*"
+        $fname = "",
+        $lname = "",
+        $city = "",
+        $area = "",
+        $specialty = "",
+        $insurance = "0 or 1",
+        $yearsOfExperience = 0
     ) {
         $doctors = array();
 
         // Build query
-        $query = "SELECT * FROM doctor WHERE first_name LIKE :first_name AND last_name LIKE :last_name 
-        AND state LIKE :city AND area LIKE :area AND specialty LIKE :specialty AND allow_insurance LIKE :insurance
-        AND years_of_exp >= :yearsOfExperience";
-
-        // Prepare statement
+        $query = "SELECT * FROM doctor WHERE first_name LIKE :first_name AND last_name LIKE :last_name AND state LIKE :state AND area LIKE :area AND specialty LIKE :specialty" .
+            ($insurance !== "0 or 1" ? " AND allow_insurance = :allow_insurance" : " ")
+            . " AND years_of_exp >= :years_of_exp";
         $stmt = $this->conn->prepare($query);
 
-        // Bind parameters
-        // Bind parameters
-
-        $stmt->bindParam(":first_name", $fname);
-        $stmt->bindParam(":last_name", $lname);
-        $stmt->bindParam(":city", $city);
+        // bind parameters
+        $first_name = "%$fname%";
+        $last_name = "%$lname%";
+        $state = "%$city%";
+        $area = "%$area%";
+        $specialty = "%$specialty%";
+        $stmt->bindParam(":first_name", $first_name);
+        $stmt->bindParam(":last_name", $last_name);
+        $stmt->bindParam(":state", $state);
         $stmt->bindParam(":area", $area);
         $stmt->bindParam(":specialty", $specialty);
-        $stmt->bindParam(":insurance", $insurance);
-        $stmt->bindParam(":yearsOfExperience", $yearsOfExperience);
+        // insurance is boolean
+        if ($insurance !== "0 or 1") {
+            $stmt->bindParam(":allow_insurance", $insurance, PDO::PARAM_BOOL);
+        }
+        $stmt->bindParam(":years_of_exp", $yearsOfExperience, PDO::PARAM_INT);
 
 
         // Execute statement
         $stmt->execute();
         // $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Display results
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $doctor = array(
-                'id' => $row['id'],
-                'first_name' => $row['firstname'],
-                'last_name' => $row['lastname'],
-                'city' => $row['state'],
-                'area' => $row['area'],
-                'specialty' => $row['specialty'],
-                'insurance' => $row['allow_insurance'],
-                'years_of_exp' => $row['years_of_exp']
-            );
 
-            // Add the doctor to the array
-            $doctors[] = $doctor;
+        // loop through rows and add to doctors array
+        // loop through rows and add to doctors array
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $doctors[] = $row;
         }
+
         return $doctors;
     }
 }
@@ -70,7 +65,7 @@ class DoctorSearch implements search
 
 $db = $database->getConnection();
 $doctorsearch = new DoctorSearch($db);
-$data = $doctorsearch->searchDoctors();
+$data = $doctorsearch->searchDoctors(insurance: true);
 
 echo "<pre>";
 print_r($data);
