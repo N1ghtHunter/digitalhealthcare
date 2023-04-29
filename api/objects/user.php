@@ -125,4 +125,6 @@ abstract class User
 
     // // read one user by username
     // abstract public function readOneByUsername($username);
+
+    abstract public function login($data);
 }
