@@ -33,6 +33,10 @@ $_SESSION['last_name'] = $last_name;
 $_SESSION['email'] = $email;
 $_SESSION['phone_number'] = $phone_number;
 $_SESSION['age'] = $age;
+$_SESSION['gender'] = $gender;
+$_SESSION['insurance_info'] = $insurance_info;
+$_SESSION['blood_type'] = $blood_type;
+$_SESSION['date_of_birth'] = $date_of_birth;
 
 
 if (empty($first_name) || empty($last_name) || empty($email) || empty($phone_number) || empty($gender) || empty($age) || empty($date_of_birth) || empty($password)) {
@@ -91,9 +95,17 @@ if ($exists) {
 
 try {
     $result = $patient->create($data);
-    if ($result) {
-        echo "Patient created successfully";
+    if ($result !== -1) {
+        $_SESSION['success'] = "Patient created successfully";
+        $_SESSION['id'] = $result;
+        $_SESSION['logged_in'] = true;
+        $_SESSION['role'] = "patient";
+        header("Location: ../../home.php");
+        exit();
     } else {
+        $_SESSION['error'] = "Something went wrong";
+        header("Location: ../../index.php");
+        exit();
     }
 } catch (\Throwable $th) {
     $_SESSION['error'] = "Something went wrong";

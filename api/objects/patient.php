@@ -104,9 +104,26 @@ class  Patient extends User
         $stmt->bindParam(":date_of_birth", $date_of_birth);
         $stmt->bindParam(":password", $password);
 
-        // Execute the query
+        // Execute the statement and return the user id if successful
         if ($stmt->execute()) {
-            return true;
+            return $this->conn->lastInsertId();
+        } else {
+            return -1;
+        }
+    }
+
+    public function login($data)
+    {
+        $email = $data['email'];
+        $password = $data['password'];
+        $query = "SELECT * FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // verify password hash
+        if (password_verify($password, $row['password'])) {
+            return $row;
         } else {
             return false;
         }

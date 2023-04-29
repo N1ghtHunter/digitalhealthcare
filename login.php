@@ -1,42 +1,19 @@
 <?php
+
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+?>
+
+<?php
 session_start();
 
-
-$firstname = '';
-$lastname = '';
 $email = '';
-$phone_number = '';
-$gender = '';
-$age = '';
-$insurance_info = '';
-$blood_type = '';
-$date_of_birth = '';
 
-if (isset($_SESSION['first_name'])) {
-    $firstname = $_SESSION['first_name'];
-}
-if (isset($_SESSION['last_name'])) {
-    $lastname = $_SESSION['last_name'];
-}
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
 }
-if (isset($_SESSION['phone_number'])) {
-    $phone_number = $_SESSION['phone_number'];
-}
 
-if (isset($_SESSION['age'])) {
-    $age = $_SESSION['age'];
-}
-if (isset($_SESSION['insurance_info'])) {
-    $insurance_info = $_SESSION['insurance_info'];
-}
-if (isset($_SESSION['blood_type'])) {
-    $blood_type = $_SESSION['blood_type'];
-}
-if (isset($_SESSION['date_of_birth'])) {
-    $date_of_birth = $_SESSION['date_of_birth'];
-}
 ?>
 <!-- create a singup form with required attributes -->
 <!DOCTYPE html>
@@ -65,7 +42,7 @@ if (isset($_SESSION['date_of_birth'])) {
         border-radius: 5px;
     }
     </style>
-    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
