@@ -21,23 +21,31 @@ class Appointment
     {
         // Prepare the statement
         $query = "INSERT INTO " . $this->table_name . " SET ";
-        $query .= "doctor_id=:doctor_id, ";
-        $query .= "date=:appDate, ";
-        $query .= "start_time=:start_time, ";
-        $query .= "hospital_id=:hospital_id, ";
-        $query .= "end_time=:end_time, ";
-        $query .= "cost=:cost";
+        if ($clinic_id != "") {
+            $query .= "clinic_id = :clinic_id, ";
+        }
+        if ($hospital_id != "") {
+            $query .= "hospital_id = :hospital_id, ";
+        }
+        $query .= "doctor_id = :doctor_id, ";
+        $query .= "date = :appDate, ";
+        $query .= "start_time = :start_time, ";
+        $query .= "end_time = :end_time, ";
+        $query .= "cost = :cost";
         $stmt = $this->conn->prepare($query);
-
-        // Bind the parameters
+        // Bind the values
+        if ($clinic_id != "") {
+            $stmt->bindParam(":clinic_id", $clinic_id);
+        }
+        if ($hospital_id != "") {
+            $stmt->bindParam(":hospital_id", $hospital_id);
+        }
         $stmt->bindParam(":doctor_id", $doctor_id);
-        $stmt->bindParam(":date", $appDate);
+        $stmt->bindParam(":appDate", $appDate);
         $stmt->bindParam(":start_time", $start_time);
-        $stmt->bindParam(":clinic_id", $clinic_id);
-        $stmt->bindParam(":hospital_id", $hospital_id);
         $stmt->bindParam(":end_time", $end_time);
         $stmt->bindParam(":cost", $cost);
-
+        // Execute the query
         if ($stmt->execute()) {
             return true;
         } else {
@@ -47,4 +55,4 @@ class Appointment
 }
 $db = $database->getConnection();
 $doctorsearch = new Appointment($db);
-echo $doctorsearch->AddAppointment("01/31/2022", "doky", "dada", 12, "4:5", "8:8", 200);
+echo $doctorsearch->AddAppointment("2020-12-12", "", "", 1, "10:00:00", "11:00:00", 1000);
