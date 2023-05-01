@@ -9,16 +9,16 @@ class  Doctor extends User
     private $conn;
     private $table_name = "doctor";
 
-   
+
     private $specialization;
-    private $yearsOfExp ;
+    private $yearsOfExp;
     private $allowInsurance;
-    private $allowOnlinePayment ;
+    private $allowOnlinePayment;
 
 
     public function getSpecialization()
     {
-        return $this->insuranceInfo;
+        return $this->specialization;
     }
 
     public function setSpecialization($specialization)
@@ -36,12 +36,11 @@ class  Doctor extends User
         $this->yearsOfExp = $yearsOfExp;
     }
 
-    
+
 
     public function getAllowInsurance()
     {
         return $this->allowInsurance;
-       
     }
 
     public function setAllowInsurance($allowInsurance)
@@ -52,7 +51,6 @@ class  Doctor extends User
     public function getAllowOnlinePayment()
     {
         return $this->allowOnlinePayment;
-       
     }
 
     public function setAllowOnlinePayment($allowOnlinePayment)
@@ -99,9 +97,9 @@ class  Doctor extends User
         $email = $data['email'];
         $phone_number = $data['phone_number'];
         $gender = $data['gender'];
-        $specialty =$data ['specialty'];
-        $state =$data ['state'];
-        $area = $data['area'] ;
+        $specialty = $data['specialty'];
+        $state = $data['state'];
+        $area = $data['area'];
         $years_of_exp = $data['years_of_exp'];
         $allow_online_payment = $data['allow_online_payment'];
         $allow_insurance = $data['allow_insurance'];
@@ -138,22 +136,19 @@ class  Doctor extends User
         $stmt->bindParam(":allow_insurance", $allow_insurance);
         $stmt->bindParam(":password", $password);
 
-       // Execute the statement and return the user id if successful
-       if (TRUE) {
-        $now = date('Y-m-d H:i:s');
-        $dr_id =2;
-        $query = "INSERT INTO requests request_date =: request_date,  doctor_id =:doctor_id";
-        $stmt2 = $this->conn->prepare($query);
-        $stmt2->bindParam(":doctor_id", $dr_id);
-        $stmt2->bindParam(":request_date", $now);
-        if($stmt2->execute()){
-            return $dr_id ;
+        // Execute the statement and return the user id if successful
+        if ($stmt->execute()) {
+            $dr_id = $this->conn->lastInsertId();
+            // insert into requests table request_date, doctor_id
+            $query2 = "INSERT INTO requests SET request_date = NOW(), doctor_id = ?";
+            $stmt2 = $this->conn->prepare($query2);
+            $stmt2->bindParam(1, $dr_id);
+            if ($stmt2->execute()) {
+                return $dr_id;
+            } else {
+                return -1;
+            }
         }
-        else return -1;
-
-    } else {
-        return -1;
-    }
     }
 
     public function login($data)
@@ -161,17 +156,20 @@ class  Doctor extends User
 
         $email = $data['email'];
         $password = $data['password'];
-        $query = "SELECT * FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
+        $query = "SELECT * FROM " . $this->table_name . " INNER JOIN requests on requests.doctor_id = doctor.id WHERE email = ? LIMIT 0,1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $email);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // verify password hash
-        if ( isset ($row) && isset ($row["password"]) && $password==$row['password']) {
-            return $row;
+        if ($stmt->execute()) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (password_verify($password, $row['password'])) {
+                return $row['request_status'] == 1 ? $row : -1;
+            } else {
+                echo "passwords do not match";
+                return false;
+            }
         } else {
+            echo "error";
             return false;
         }
-
     }
 }

@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 session_start();
 
 $pwdRegEx = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%#*?&]{8,}$/";
+
 $database = new Database();
 $db = $database->getConnection();
 $doctor = new Doctor($db);
@@ -24,7 +25,7 @@ $phone_number = $_POST['phone_number'];
 $gender = $_POST['gender'];
 $specialty =  $_POST['specialty'];
 $state =  $_POST['state'];
-$area =  $_POST['area'] ;
+$area =  $_POST['area'];
 $years_of_exp =  $_POST['years_of_exp'];
 $allow_online_payment = $_POST['allow_online_payment'];
 $allow_insurance = $_POST['allow_insurance'];
@@ -42,7 +43,7 @@ $_SESSION['years_of_exp'] = $years_of_exp;
 $_SESSION['allow_insurance'] = $allow_insurance;
 $_SESSION['allow_online_payment'] = $allow_online_payment;
 
-if (empty($first_name) || empty($last_name) || empty($email) ||empty($phone_number) ||empty($gender)  || empty($specialty) || empty($area) || empty($state) || empty($allow_online_payment) || empty($password)) {
+if (empty($first_name) || empty($last_name) || empty($email) || empty($phone_number) || empty($gender)  || empty($specialty) || empty($area) || empty($state) || empty($allow_online_payment) || empty($password)) {
     $_SESSION['error'] = "Fill all the required fields";
     header("Location: ../../doctor/signup.php");
     exit();
@@ -62,7 +63,8 @@ if (!preg_match($pwdRegEx, $password)) {
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['email_error'] = "Invalid email format";
-    return;
+    header("Location: ../../doctor/signup.php");
+    exit();
 }
 
 // hash the password
@@ -86,8 +88,6 @@ $data = array(
     "allow_insurance" => $allow_insurance,
     "allow_online_payment" => $allow_online_payment,
     "password" => $password_hash
-
-
 );
 
 $exists = $doctor->emailExists($email);
@@ -102,20 +102,22 @@ if ($exists) {
 
 try {
     $result = $doctor->create($data);
-    if ($result !== -1) {
+    if ($result != -1) {
+        session_unset();
         $_SESSION['success'] = "Doctor account created successfully";
         $_SESSION['id'] = $result;
         $_SESSION['logged_in'] = true;
         $_SESSION['role'] = "doctor";
         header("Location: ../../home.php");
-                exit();
-    }  else {
+        exit();
+    } else {
         $_SESSION['error'] = "Something went wrong";
         header("Location: ../../doctor/signup.php");
         exit();
-    } 
+    }
 } catch (\Throwable $th) {
-      $_SESSION['error'] = "Something went wrong";
-    echo $th ;
-    exit();  
+    $_SESSION['error'] = "Something went wrong";
+    echo $th;
+    header("Location: ../../doctor/signup.php");
+    exit();
 }
