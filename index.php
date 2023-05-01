@@ -138,11 +138,14 @@ if (isset($_SESSION['date_of_birth'])) {
                         <input type="text" name="insurance_info" placeholder="Insurance Info"
                             value="<?php echo $insurance_info; ?>">
                         <input type="text" name="age" placeholder="Age *" value="<?php echo $age; ?>" required>
+
                         <?php if (isset($_SESSION['error'])) { ?>
                         <p class="error"><?php echo $_SESSION['error']; ?></p>
                         <?php
                             unset($_SESSION['error']);
                         } ?>
+
+                        
                         <input id="submit" type="submit" value="Sign Up">
                     </form>
                 </div>

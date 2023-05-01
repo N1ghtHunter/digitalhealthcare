@@ -462,6 +462,10 @@ ALTER TABLE `session`
   ADD CONSTRAINT `session_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`),
   ADD CONSTRAINT `session_ibfk_3` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`),
   ADD CONSTRAINT `session_ibfk_4` FOREIGN KEY (`clinic_id`) REFERENCES `clinic` (`id`);
+
+  ALTER TABLE `doctor` 
+  ADD `full_name` VARCHAR(255) GENERATED ALWAYS AS (CONCAT(`first_name`, ' ', `last_name`)) STORED;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
