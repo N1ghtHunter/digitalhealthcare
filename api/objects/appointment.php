@@ -17,7 +17,7 @@ class Appointment
         $this->conn = $db;
     }
 
-    public function AddAppointment($appDate, $clinic_id = "", $hospital_id = "", $doctor_id, $start_time, $end_time, $cost)
+    public function AddAppointment($appDate, $doctor_id, $start_time, $end_time, $cost, $clinic_id = "", $hospital_id = "")
     {
         // Prepare the statement
         $query = "INSERT INTO " . $this->table_name . " SET ";
@@ -52,7 +52,72 @@ class Appointment
             return false;
         }
     }
+    function selectClinicsByDoctorId($doctorId)
+    {
+        $address = array();
+        $query = "SELECT name FROM clinic WHERE doctor_id like :doctorId";
+        //
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":doctorId", $doctorId);
+        $stmt->execute();
+        //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+            $address[] = $row;
+        }
+        $query = "SELECT name FROM hospital WHERE doctor_id like :doctorId";
+        //
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":doctorId", $doctorId);
+        $stmt->execute();
+        //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+            $address[] = $row;
+        }
+        return $address;
+    }
+
+    function selectClinicIdByName($name)
+    {
+        $query = 'SELECT id FROM clinic WHERE name like :name';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindparam(":name", $name);
+        if ($stmt->execute()) {
+            $clinic = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $clinic["id"];
+        } else {
+            return "";
+        }
+    }
+
+    function selectHospitalIdByName($name)
+    {
+        $query = 'SELECT id FROM hospital WHERE name like :name';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindparam(":name", $name);
+
+
+        if ($stmt->execute()) {
+            $hospital = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $hospital["id"];
+        } else {
+            return "";
+        }
+    }
 }
-$db = $database->getConnection();
-$doctorsearch = new Appointment($db);
-echo $doctorsearch->AddAppointment("2020-12-12", "", "", 1, "10:00:00", "11:00:00", 1000);
+
+
+
+
+
+// $db = $database->getConnection();
+// $doctorsearch = new Appointment($db);
+// $test = $doctorsearch->selectClinicsByDoctorId(1);
+
+//echo $doctorsearch->AddAppointment("2020-12-12", "", "", 1, "10:00:00", "11:00:00", 1000);
+// echo "<pre>";
+// print_r($test);
+// echo "</pre>";
