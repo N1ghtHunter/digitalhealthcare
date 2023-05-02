@@ -156,7 +156,20 @@ class  Doctor extends User
 
         $email = $data['email'];
         $password = $data['password'];
-        $query = "SELECT * FROM " . $this->table_name . " INNER JOIN requests on requests.doctor_id = doctor.id WHERE email = ? LIMIT 0,1";
+        $query = "SELECT  
+        d.id,
+        d.first_name,
+        d.last_name,
+        d.gender,
+        d.years_of_exp,
+        d.specialty,
+        d.allow_insurance,
+        d.allow_online_payment,
+        d.state,
+        d.area,
+        d.password,  
+        r.request_status
+        FROM " . $this->table_name . " d INNER JOIN requests r on r.doctor_id = d.id WHERE email = ? LIMIT 0,1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $email);
         if ($stmt->execute()) {

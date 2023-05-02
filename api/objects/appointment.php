@@ -101,7 +101,12 @@ class Appointment
 
         if ($stmt->execute()) {
             $hospital = $stmt->fetch(PDO::FETCH_ASSOC);
-
+            if ($hospital == null) {
+                return "";
+            }
+            if ($hospital["id"] == null) {
+                return "";
+            }
             return $hospital["id"];
         } else {
             return "";

@@ -91,24 +91,26 @@ if ($exists) {
     exit();
 }
 
-
+// get now time to insert as created date of type datetime
 
 try {
     $result = $patient->create($data);
     if ($result !== -1) {
+        session_unset();
         $_SESSION['success'] = "Patient created successfully";
-        $_SESSION['id'] = $result;
+        $_SESSION['id'] = $result['id'];
+        $_SESSION['patient'] = $result;
         $_SESSION['logged_in'] = true;
         $_SESSION['role'] = "patient";
         header("Location: ../../home.php");
         exit();
-    }  else {
+    } else {
         $_SESSION['error'] = "Something went wrong";
         header("Location: ../../index.php");
         exit();
-    } 
+    }
 } catch (\Throwable $th) {
-     $_SESSION['error'] = "Something went wrong";
+    $_SESSION['error'] = "Something went wrong";
     header("Location: ../../index.php");
-    exit(); 
+    exit();
 }

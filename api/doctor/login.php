@@ -38,12 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: http://localhost/doctor/login.php");
         exit();
     } else {
-        $_SESSION['id'] = $result->id;
+        session_unset();
+        $_SESSION['id'] = $result['id'];
         // store the whole doctor data in session
         $_SESSION['doctor'] = $result;
         $_SESSION['logged_in'] = true;
         $_SESSION['role'] = "doctor";
-        header("Location: ../../home.php");
+        header("Location: http://localhost/doctor/home.php");
         exit();
     }
 } else {
