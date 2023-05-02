@@ -91,7 +91,7 @@ if ($exists) {
     exit();
 }
 
-
+// get now time to insert as created date of type datetime
 
 try {
     $result = $patient->create($data);

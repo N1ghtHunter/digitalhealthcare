@@ -75,8 +75,6 @@ class DoctorSearch implements search
         // Execute statement
         $stmt->execute();
         // $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
         // loop through rows and add to doctors array
         // loop through rows and add to doctors array
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
