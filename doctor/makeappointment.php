@@ -46,8 +46,13 @@
                 <div class="row gx-5">
                     <div class="col-lg-6 py-5">
                         <div class="py-5">
-                            <h1 class="display-5 text-white mb-4">We Are A Certified and Award Winning Dental Clinic You Can Trust</h1>
-                            <p class="text-white mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
+                            <h1 class="display-5 text-white mb-4">We Are A Certified and Award Winning Dental Clinic You
+                                Can Trust</h1>
+                            <p class="text-white mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd
+                                ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt
+                                voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem.
+                                Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.
+                            </p>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -55,38 +60,22 @@
                             <h1 class="text-white mb-4">Make Appointment</h1>
                             <form>
                                 <div class="row g-3">
-
                                     <div class="col-12 col-sm-6">
-
-
-
                                         <select name="place" class="form-select bg-light border-0" style="height: 55px;">
                                             <option selected>Select clinic Or hospital </option>
                                             <?php
                                             include_once '../api/config/database.php';
                                             include_once '../api/objects/appointment.php';
                                             $db = $database->getConnection();
-
                                             $clinic = new Appointment($db);
                                             $data = $clinic->selectClinicsByDoctorId(1);
-
                                             for ($i = 0; $i < count($data); $i++) { ?>
-
                                                 <?php $test = implode(', ', $data[$i]); ?>
-                                                <option value="<?php echo $test ?>"><?php
-                                                                                    echo $test;
-                                                                                    ?></option>
-
-
-
-
+                                                <option value="<?php echo $test ?>">
+                                                    <?php echo $test; ?></option>
                                             <?php } ?>
-
                                         </select>
-
-
                                     </div>
-
                                     <div class="col-12 col-sm-6">
                                         <input name="cost" type="text" class="form-control bg-light border-0" placeholder="Cost" style="height: 55px;">
                                     </div>
@@ -118,7 +107,6 @@
                                     }
                                     ?>
                                     <div id="sumapp" class="col-12">
-
                                         <button class="btn btn-dark w-100 py-3" type="submit">Make Appointment</button>
                                     </div>
                                 </div>
@@ -130,11 +118,6 @@
         </div>
     </form>
     <!-- Appointment End -->
-
-
-
-
-
     <div class="event-schedule-area-two bg-color pad100">
         <div class="container">
             <div class="row">

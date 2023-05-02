@@ -106,7 +106,9 @@ class  Patient extends User
 
         // Execute the statement and return the user id if successful
         if ($stmt->execute()) {
-            return $this->conn->lastInsertId();
+            // return the full user record
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;
         } else {
             return -1;
         }

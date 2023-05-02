@@ -45,6 +45,7 @@ if ($result == -1) {
     header("Location: ../../login.php");
     exit();
 } else {
+    session_unset();
     $_SESSION['patient'] = $result;
     $_SESSION['logged_in'] = true;
     $_SESSION['role'] = "patient";

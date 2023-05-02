@@ -105,9 +105,6 @@ try {
     if ($result != -1) {
         session_unset();
         $_SESSION['success'] = "Doctor account created successfully";
-        $_SESSION['id'] = $result;
-        $_SESSION['logged_in'] = true;
-        $_SESSION['role'] = "doctor";
         header("Location: ../../home.php");
         exit();
     } else {
