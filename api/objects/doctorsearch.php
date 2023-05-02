@@ -23,7 +23,34 @@ class DoctorSearch implements search
         $doctors = array();
 
         // Build query
-        $query = "SELECT * FROM doctor WHERE LOWER (full_name) LIKE :name  AND state LIKE :state AND area LIKE :area AND specialty LIKE :specialty"
+        $query = "SELECT DISTINCT d.id,
+        d.first_name,
+        d.last_name,
+        d.gender,
+        d.years_of_exp,
+        d.specialty,
+        d.allow_insurance,
+        d.allow_online_payment,
+        d.state,
+        d.area,
+        a.id as appointment_id,
+        a.date,
+        a.start_time,
+        a.end_time,
+        a.cost,
+        c.id as clinic_id,
+        c.address as clinic_address,
+        c.phone_number as clinic_phone,
+        c.name as clinic_name,
+        h.id as hospital_id,
+        h.name as hospital_name,
+        h.address as hospital_address,
+        h.phone_number as hospital_phone 
+    FROM doctor d 
+    INNER JOIN appointments a ON d.id = a.doctor_id 
+    LEFT JOIN clinic c ON a.clinic_id = c.id
+    LEFT JOIN hospital h ON a.hospital_id = h.id
+ WHERE LOWER (full_name) LIKE :name  AND state LIKE :state AND area LIKE :area AND specialty LIKE :specialty "
             /* ($insurance !== "0 or 1" ? " AND allow_insurance = :allow_insurance" : " ")
             . " AND years_of_exp >= :years_of_exp";*/;
         $stmt = $this->conn->prepare($query);
