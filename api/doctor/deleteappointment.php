@@ -12,27 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 }
 
 session_start();
-
 $database = new Database();
 $db = $database->getConnection();
-
 $appointment = new Appointment($db);
-$place = $_POST['place'];
-$cost = $_POST['cost'];
-$date = $_POST['date'];
-$start_date = $_POST['start_time'];
-$end_date = $_POST['end_time'];
-$clinic = new Appointment($db);
-$id_clinic = $clinic->selectClinicIdByName($place);
-$id_hospital = $clinic->selectHospitalIdByName($place);
+$app_id = $_POST["delete_app"];
+if ($appointment->deleteAppointment($app_id)) {
 
-if ($appointment->AddAppointment($date, 1, $start_date, $end_date, $cost, clinic_id: $id_clinic, hospital_id: $id_hospital)) {
-
-    $_SESSION["add_appointment_success"] = true;
+    $_SESSION["delete_appointment_success"] = true;
     header("Location: ../../doctor/makeappointment.php ");
     exit();
 } else {
-    $_SESSION["add_appointment_success"] = false;
+    $_SESSION["delete_appointment_success"] = false;
     header("Location: ../../doctor/makeappointment.php ");
     exit();
 }
