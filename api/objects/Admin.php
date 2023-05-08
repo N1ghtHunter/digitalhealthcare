@@ -3,41 +3,13 @@
 include_once '../config/database.php';
 include_once '../objects/user.php';
 
+
 $database = new Database();
-class  Patient extends User
+
+class  Admin extends User
 {
     private $conn;
-    private $table_name = "patient";
-
-    private $insuranceInfo;
-    private $bloodType;
-
-    public function getInsuranceInfo()
-    {
-        return $this->insuranceInfo;
-    }
-
-    public function setInsuranceInfo($insuranceInfo)
-    {
-        $this->insuranceInfo = $insuranceInfo;
-    }
-
-    public function getBloodType()
-    {
-        return $this->bloodType;
-    }
-
-    public function setBloodType($bloodType)
-    {
-        $this->bloodType = $bloodType;
-    }
-
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
-    // implement abstract methods
+    private $table_name = "Admin";
 
     public function emailExists($email)
     {
@@ -52,6 +24,10 @@ class  Patient extends User
         } else {
             return false;
         }
+    }
+    public function __construct($db)
+    {
+        $this->conn = $db;
     }
 
     public function readOne($id)
@@ -104,30 +80,32 @@ class  Patient extends User
         $stmt->bindParam(":date_of_birth", $date_of_birth);
         $stmt->bindParam(":password", $password);
 
-        // Execute the statement and return the user id if successful
+        // Execute the query
         if ($stmt->execute()) {
-            // return the full user record
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $row;
-        } else {
-            return -1;
-        }
-    }
-
-    public function login($data)
-    {
-        $email = $data['email'];
-        $password = $data['password'];
-        $query = "SELECT * FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // verify password hash
-        if (password_verify($password, $row['password'])) {
-            return $row;
+            return true;
         } else {
             return false;
         }
     }
+     public function login($data)
+    {
+
+        $username = $data['uname'];
+        $password = $data['pass'];
+        $query = "SELECT * FROM " . $this->table_name . " WHERE username = ? LIMIT 0,1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $username);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // verify password hash
+        if ( isset ($row) && isset ($row["password"]) && $password==$row['password']) {
+            return $row;
+        } else {
+            return false;
+        }
+
+    }
+
+
+   
 }

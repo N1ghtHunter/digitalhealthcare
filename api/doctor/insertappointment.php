@@ -22,17 +22,18 @@ $cost = $_POST['cost'];
 $date = $_POST['date'];
 $start_date = $_POST['start_time'];
 $end_date = $_POST['end_time'];
+$dr_id = $_SESSION['id'];
 $clinic = new Appointment($db);
 $id_clinic = $clinic->selectClinicIdByName($place);
 $id_hospital = $clinic->selectHospitalIdByName($place);
 
-if ($appointment->AddAppointment($date, 1, $start_date, $end_date, $cost, clinic_id: $id_clinic, hospital_id: $id_hospital)) {
+if ($appointment->AddAppointment($date, $dr_id, $start_date, $end_date, $cost, clinic_id: $id_clinic, hospital_id: $id_hospital)) {
 
     $_SESSION["add_appointment_success"] = true;
-    header("Location: ../../doctor/makeappointment.php ");
+    header("Location: ../../doctor/home.php ");
     exit();
 } else {
     $_SESSION["add_appointment_success"] = false;
-    header("Location: ../../doctor/makeappointment.php ");
+    header("Location: ../../doctor/home.php ");
     exit();
 }

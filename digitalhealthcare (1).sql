@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2023 at 09:30 PM
+-- Generation Time: Apr 28, 2023 at 09:51 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -79,7 +79,9 @@ CREATE TABLE `doctor` (
   `specialty` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `years_of_exp` int(11) DEFAULT NULL,
   `allow_insurance` tinyint(1) DEFAULT NULL,
-  `allow_online_payment` tinyint(1) DEFAULT NULL
+  `allow_online_payment` tinyint(1) DEFAULT NULL,
+  `state` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `area` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -123,15 +125,21 @@ CREATE TABLE `patient` (
   `phone_number` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `gender` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL
+  `date_of_birth` date DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `insurance_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `blood_type` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `gender`, `date_of_birth`) VALUES
-(1, 'Mazin', 'Islam', '0103944386', 'mazin@mazin', 'male', '2023-04-13');
+INSERT INTO `patient` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `gender`, `date_of_birth`, `password`, `age`, `insurance_info`, `blood_type`) VALUES
+(1, 'Mazin', 'Islam', '0103944386', 'mazin@mazin', 'male', '2023-04-13', 'Mazin236', NULL, NULL, NULL),
+(2, 'Mazin', 'Sobhy', '01033944386', 'mazinislam431@gmail.com', 'male', '2023-04-06', 'Mazin236', 20, 'ay 7aga', 'A+'),
+(3, 'Mazin', 'Sobhy', '01033944386', 'mazinislam431@gmail.comdsfsd', 'male', '2023-04-06', '$2y$10$VoOinFn.XLe.WRWvV9eDXe3vgwWkgxDgMDeQk0dtDQ/CLApJH7TRq', 20, 'ay 7aga', 'A+');
 
 -- --------------------------------------------------------
 
@@ -206,7 +214,9 @@ CREATE TABLE `session` (
   `doctor_id` int(11) DEFAULT NULL,
   `patient_id` int(11) DEFAULT NULL,
   `clinic_id` int(11) DEFAULT NULL,
-  `hospital_id` int(11) DEFAULT NULL
+  `hospital_id` int(11) DEFAULT NULL,
+  `state` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `area` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -359,7 +369,7 @@ ALTER TABLE `hospital`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -452,6 +462,10 @@ ALTER TABLE `session`
   ADD CONSTRAINT `session_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`),
   ADD CONSTRAINT `session_ibfk_3` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`),
   ADD CONSTRAINT `session_ibfk_4` FOREIGN KEY (`clinic_id`) REFERENCES `clinic` (`id`);
+
+  ALTER TABLE `doctor` 
+  ADD `full_name` VARCHAR(255) GENERATED ALWAYS AS (CONCAT(`first_name`, ' ', `last_name`)) STORED;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -44,44 +44,27 @@
         <div class="container-fluid bg-primary bg-appointment my-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="container">
                 <div class="row gx-5">
-
                     <div class="col-lg-12">
                         <div class="appointment-form h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
                             <h1 class="text-white mb-4">Make Appointment</h1>
                             <form>
                                 <div class="row g-3">
-
                                     <div class="col-12 col-sm-6">
-
-
-
                                         <select name="place" class="form-select bg-light border-0" style="height: 55px;">
                                             <option selected>Select clinic Or hospital </option>
                                             <?php
                                             include_once '../api/config/database.php';
                                             include_once '../api/objects/appointment.php';
                                             $db = $database->getConnection();
-
                                             $clinic = new Appointment($db);
                                             $data = $clinic->selectClinicsHospitalByDoctorId(1);
-
                                             for ($i = 0; $i < count($data); $i++) { ?>
-
                                                 <?php $test = implode(', ', $data[$i]); ?>
-                                                <option value="<?php echo $test ?>"><?php
-                                                                                    echo $test;
-                                                                                    ?></option>
-
-
-
-
+                                                <option value="<?php echo $test ?>">
+                                                    <?php echo $test; ?></option>
                                             <?php } ?>
-
                                         </select>
-
-
                                     </div>
-
                                     <div class="col-12 col-sm-6">
                                         <input name="cost" type="text" class="form-control bg-light border-0" placeholder="Cost" style="height: 55px;">
                                     </div>
@@ -113,7 +96,6 @@
                                     }
                                     ?>
                                     <div id="sumapp" class="col-12">
-
                                         <button class="btn btn-dark w-100 py-3" type="submit">Make Appointment</button>
                                     </div>
                                 </div>
@@ -125,11 +107,6 @@
         </div>
     </form>
     <!-- Appointment End -->
-
-
-
-
-
     <div class="event-schedule-area-two bg-color pad100">
         <div class="container">
             <div class="row">

@@ -36,6 +36,10 @@ $data = array(
 );
 $data = $doctorsearch->searchDoctors(name: $name, city: $city, area: $area, specialty: $specialty);
 
-echo "<pre>";
-print_r($data);
-echo "</pre>";
+$_SESSION['searchResults'] = $data;
+header("Location: ../../searchResults.php?name=$name&city=$city&area=$area&specialty=$specialty");
+exit();
+
+// echo "<pre>";
+// print_r($data);
+// echo "</pre>";
