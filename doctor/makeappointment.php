@@ -152,6 +152,7 @@
                                         $db = $database->getConnection();
 
                                         $app = new Appointment($db);
+                                        //TODO: Pass dr_id to the function
                                         $data = $app->SelsctAppointment(1);
 
                                         for ($i = 0; $i < count($data); $i++) { ?>
