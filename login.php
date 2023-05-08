@@ -16,7 +16,7 @@ if (isset($_SESSION['email'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Sign In</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
         * {
@@ -51,7 +51,6 @@ if (isset($_SESSION['email'])) {
                         <?php
                             unset($_SESSION['email_error']);
                         } ?>
-                        <!-- date -->
                         <input type="password" name="password" placeholder="Password" required>
                         <?php if (isset($_SESSION['password_error'])) { ?>
                             <p class="error"><?php echo $_SESSION['password_error']; ?></p>
@@ -63,6 +62,7 @@ if (isset($_SESSION['email'])) {
                         <?php
                             unset($_SESSION['error']);
                         } ?>
+                        <a href="forget-password.php">Forgot Password?</a>
                         <input id="submit" type="submit" value="Sign In">
                         <p class="mt-2">Don't have an account? <a href="index.php">Signup Now</a></p>
                     </form>
@@ -70,10 +70,10 @@ if (isset($_SESSION['email'])) {
             </div>
             <div class="right">
                 <div class="right-text">
-                    <h2>Vezzeta</h2>
+                    <h2>Ek4fly</h2>
                     <h5>A DIGITAL HEALTH CARE APPLICATION</h5>
                     <p>
-                        &#169; 2023 Vezzeta. All Rights Reserved.
+                        &#169; 2023 Ek4fly. All Rights Reserved.
                     </p>
                 </div>
             </div>

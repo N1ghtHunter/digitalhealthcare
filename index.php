@@ -76,7 +76,6 @@ if (isset($_SESSION['date_of_birth'])) {
                             src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download"
                             alt="">Return home</a></div>
                 <div class="contact">
-
                     <form action="api/patient/create.php" method="POST">
                         <h3>SIGN UP</h3>
                         <input type="text" name="first_name" placeholder="First Name *"
@@ -98,8 +97,8 @@ if (isset($_SESSION['date_of_birth'])) {
                             value="<?php echo $phone_number; ?>" required>
                         <p>Gender: *</p>
                         <div class="wrapper">
-                            <input type="radio" name="gender" value="female" value="male" id="option-1" checked>
-                            <input type="radio" name="gender" id="option-2">
+                            <input type="radio" name="gender" value="male" id="option-1" checked>
+                            <input type="radio" name="gender" value="female" id="option-2">
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <span>Male</span>
@@ -144,15 +143,14 @@ if (isset($_SESSION['date_of_birth'])) {
                         <?php
                             unset($_SESSION['error']);
                         } ?>
-
-
                         <input id="submit" type="submit" value="Sign Up">
+                        <p class="pt-3">Already have an account? <a href="login.php">Login</a></p>
                     </form>
                 </div>
             </div>
             <div class="right">
                 <div class="right-text">
-                    <h2>Vezzeta</h2>
+                    <h2>Ek4fly</h2>
                     <h5>A DIGITAL HEALTH CARE APPLICATION</h5>
                     <p>
                         &#169; 2023 Vezzeta. All Rights Reserved.
