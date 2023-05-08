@@ -44,18 +44,7 @@
         <div class="container-fluid bg-primary bg-appointment my-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="container">
                 <div class="row gx-5">
-                    <div class="col-lg-6 py-5">
-                        <div class="py-5">
-                            <h1 class="display-5 text-white mb-4">We Are A Certified and Award Winning Dental Clinic You
-                                Can Trust</h1>
-                            <p class="text-white mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd
-                                ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt
-                                voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem.
-                                Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="appointment-form h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
                             <h1 class="text-white mb-4">Make Appointment</h1>
                             <form>
@@ -68,7 +57,7 @@
                                             include_once '../api/objects/appointment.php';
                                             $db = $database->getConnection();
                                             $clinic = new Appointment($db);
-                                            $data = $clinic->selectClinicsByDoctorId(1);
+                                            $data = $clinic->selectClinicsHospitalByDoctorId(1);
                                             for ($i = 0; $i < count($data); $i++) { ?>
                                                 <?php $test = implode(', ', $data[$i]); ?>
                                                 <option value="<?php echo $test ?>">
@@ -144,6 +133,7 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="home" role="tabpanel">
                             <div class="table-responsive">
+
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -154,544 +144,136 @@
                                             <th class="text-center" scope="col">Venue</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
 
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Harman Kardon</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                    <tbody>
+                                        <?php
+                                        include_once '../api/config/database.php';
+                                        include_once '../api/objects/appointment.php';
+                                        $db = $database->getConnection();
 
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>20</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Toni Duggan</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                        $app = new Appointment($db);
+                                        $data = $app->SelsctAppointment(1);
 
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box border-bottom-0">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>18</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Billal Hossain</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                                        for ($i = 0; $i < count($data); $i++) { ?>
+                                            <tr class="inner-box">
+                                                <th scope="row">
+
+                                                    <div class="event-date">
+                                                        <span><?php echo date('d', strtotime($data[$i]['date'])); ?></span>
+                                                        <p><?php echo date('F', strtotime($data[$i]['date'])); ?></p>
+                                                    </div>
+                                                </th>
+
+                                                <td>
+                                                    <div class="event-wrap">
+                                                        <h3><a href="#"><?php echo $data[$i]['clinic_name'];
+                                                                        echo $data[$i]['hospital_name']; ?></a></h3>
+                                                        <div class="meta">
+                                                            <?php echo "Address";
+                                                            ?>
+                                                            <div class="organizers">
+                                                                <a href="#"><?php echo $data[$i]['clinic_address'];
+                                                                            echo $data[$i]['hospital_address']; ?></a>
+                                                            </div>
+                                                            <?php echo "Cost";
+                                                            ?>
+                                                            <div class="organizers">
+                                                                <a href="#"><?php echo $data[$i]['cost'];
+                                                                            ?></a>
+                                                            </div>
+                                                            <div class="time">
+                                                                <span><?php
+                                                                        $hour = date('g', strtotime($data[$i]['start_time']));
+                                                                        $minute = date('i', strtotime($data[$i]['start_time']));
+                                                                        $amPm = date('A', strtotime($data[$i]['start_time']));
+                                                                        echo $hour . ':' . $minute . ' ' . $amPm;
+                                                                        echo "-";
+                                                                        $hour = date('g', strtotime($data[$i]['end_time']));
+                                                                        $minute = date('i', strtotime($data[$i]['end_time']));
+                                                                        $amPm = date('A', strtotime($data[$i]['end_time']));
+                                                                        echo $hour . ':' . $minute . ' ' . $amPm;
+                                                                        // $interval = $data[$i]['start_time']->diff($data[$i]['end_time']);
+                                                                        // echo $interval->format('%H:%I:%S');
+
+                                                                        ?></span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </td>
+
+                                                <td>
+                                                    <form action="../api/doctor/deleteappointment.php" method="POST" id="appform">
+                                                        <input name="delete_app" value="<?php echo $data[$i]['appointment_id'] ?>" type="text" placeholder=<?php echo $data[$i]['appointment_id'] ?> style="display:none">
+                                                        <div class="primary-btn">
+                                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                                        </div>
+                                                        <?php
+
+                                                        if (isset($_SESSION["delete_appointment_success"]) && $_SESSION["delete_appointment_success"] == true) { ?>
+                                                            <p><?php echo "Appointment Deleded Successfully"; ?></p>
+                                                        <?php
+                                                            unset($_SESSION["delete_appointment_success"]);
+                                                        } else if (isset($_SESSION["delete_appointment_success"]) && $_SESSION["delete_appointment_success"] == false) {
+                                                            echo "<p>Failed</p>";
+                                                            unset($_SESSION["delete_appointment_success"]);
+                                                        }
+                                                        ?>
+                                                    </form>
+                                                </td>
+                                            </tr>
+
+
+
+
                                             </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room A3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
+
                                 </table>
+
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Speakers</th>
-                                            <th scope="col">Session</th>
-                                            <th scope="col">Venue</th>
-                                            <th scope="col">Venue</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Harman Kardon</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Billal Hossain</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box border-bottom-0">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Toni Duggan</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                        <form action="../api/doctor/deleteallappointment.php" method="POST" id="appform">
+                            <?php
+
+                            if (isset($_SESSION["delete_all_appointment_success"]) && $_SESSION["delete_all_appointment_success"] == true) { ?>
+                                <p><?php echo "Appointments Deleded Successfully"; ?></p>
+                            <?php
+                                unset($_SESSION["delete_all_appointment_success"]);
+                            } else if (isset($_SESSION["delete_all_appointment_success"]) && $_SESSION["delete_all_appointment_success"] == false) {
+                                echo "<p>Failed</p>";
+                                unset($_SESSION["delete_all_appointment_success"]);
+                            }
+                            ?>
+                            <div class="primary-btn text-center">
+                                <button class="btn btn-primary" type="submit">Delete All</button>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="sunday" role="tabpanel" aria-labelledby="sunday-tab">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Speakers</th>
-                                            <th scope="col">Session</th>
-                                            <th scope="col">Venue</th>
-                                            <th scope="col">Venue</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Toni Duggan</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Harman Kardon</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box border-bottom-0">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Billal Hossain</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="monday" role="tabpanel" aria-labelledby="monday-tab">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Speakers</th>
-                                            <th scope="col">Session</th>
-                                            <th scope="col">Venue</th>
-                                            <th scope="col">Venue</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>16</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Harman Kardon</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>18</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Toni Duggan</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="inner-box border-bottom-0">
-                                            <th scope="row">
-                                                <div class="event-date">
-                                                    <span>20</span>
-                                                    <p>Novembar</p>
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div class="event-img">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="event-wrap">
-                                                    <h3><a href="#">Billal Hossain</a></h3>
-                                                    <div class="meta">
-                                                        <div class="organizers">
-                                                            <a href="#">Aslan Lingker</a>
-                                                        </div>
-                                                        <div class="categories">
-                                                            <a href="#">Inspire</a>
-                                                        </div>
-                                                        <div class="time">
-                                                            <span>05:35 AM - 08:00 AM 2h 25'</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="r-no">
-                                                    <span>Room B3</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="primary-btn">
-                                                    <a class="btn btn-primary" href="#">Read More</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+
+                        </form>
                     </div>
-                    <div class="primary-btn text-center">
-                        <a href="#" class="btn btn-primary">Download Schedule</a>
-                    </div>
+                    <!-- /col end-->
                 </div>
-                <!-- /col end-->
+                <!-- /row end-->
             </div>
-            <!-- /row end-->
         </div>
-    </div>
 
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="lib/twentytwenty/jquery.event.move.js"></script>
-    <script src="lib/twentytwenty/jquery.twentytwenty.js"></script>
-    <!-- <script src="js/searchBAR.js"></script> -->
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="lib/twentytwenty/jquery.event.move.js"></script>
+        <script src="lib/twentytwenty/jquery.twentytwenty.js"></script>
+        <!-- <script src="js/searchBAR.js"></script> -->
 </body>
 
 </html>

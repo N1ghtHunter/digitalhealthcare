@@ -52,7 +52,7 @@ class Appointment
             return false;
         }
     }
-    function selectClinicsByDoctorId($doctorId)
+    function selectClinicsHospitalByDoctorId($doctorId)
     {
         $address = array();
         $query = "SELECT name FROM clinic WHERE doctor_id like :doctorId";
@@ -112,7 +112,72 @@ class Appointment
             return "";
         }
     }
+    public function SelsctAppointment($id)
+    {
+        $appointment = array();
+
+        // Build query
+        $query = "SELECT DISTINCT 
+        a.id as appointment_id,
+        a.date,
+        a.start_time,
+        a.end_time,
+        a.cost,
+        c.id as clinic_id,
+        c.address as clinic_address,
+        c.name as clinic_name,
+        h.id as hospital_id,
+        h.name as hospital_name,
+        h.address as hospital_address
+    FROM appointments a
+    LEFT JOIN clinic c ON a.clinic_id=c.id
+    LEFT JOIN hospital h ON a.hospital_id = h.id
+    WHERE a.doctor_id LIKE :id";
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+
+        $stmt->bindParam(":id", $id);
+
+
+
+
+        // Execute statement
+        $stmt->execute();
+        // $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+        // loop through rows and add to doctors array
+        // loop through rows and add to doctors array
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $appointment[] = $row;
+        }
+
+        return $appointment;
+    }
+    public function deleteAppointment($id)
+    {
+        // Build query
+        $query = "DELETE FROM appointments WHERE id like :id";
+        $stmt = $this->conn->prepare($query);
+        // bind parameters
+        $stmt->bindParam(":id", $id);
+        // Execute statement
+        $stmt->execute();
+        return true;
+    }
+    public function deleteAllAppointment($doctor_id)
+    {
+        // Build query
+        $query = "DELETE FROM appointments WHERE doctor_id like :doctor_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":doctor_id", $doctor_id);
+        // bind parameters
+        $stmt->execute();
+        return true;
+    }
 }
+
 
 
 
@@ -120,9 +185,9 @@ class Appointment
 
 // $db = $database->getConnection();
 // $doctorsearch = new Appointment($db);
-// $test = $doctorsearch->selectClinicsByDoctorId(1);
+// $test = $doctorsearch->SelsctAppointment(1);
 
-//echo $doctorsearch->AddAppointment("2020-12-12", "", "", 1, "10:00:00", "11:00:00", 1000);
+// echo $doctorsearch->SelsctAppointment(1);
 // echo "<pre>";
 // print_r($test);
 // echo "</pre>";
