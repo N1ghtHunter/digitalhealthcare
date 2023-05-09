@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2023 at 09:51 AM
+-- Generation Time: May 02, 2023 at 06:56 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -43,10 +43,29 @@ CREATE TABLE `appointments` (
   `id` int(11) NOT NULL,
   `doctor_id` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
-  `cost` int(11) DEFAULT NULL
+  `start_time` time DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL,
+  `clinic_id` int(11) DEFAULT NULL,
+  `hospital_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `doctor_id`, `date`, `start_time`, `end_time`, `cost`, `clinic_id`, `hospital_id`) VALUES
+(80, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, NULL),
+(81, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, NULL),
+(82, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, 0),
+(83, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, 0, NULL),
+(84, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, NULL),
+(85, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, 0),
+(86, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, 0, NULL),
+(87, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, 0),
+(88, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, NULL, 1),
+(89, 1, '0000-00-00 00:00:00', '00:00:00', '00:00:00', 0, 2, NULL),
+(90, 1, '2023-05-11 00:00:00', '20:55:00', '21:55:00', 10000, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -59,8 +78,17 @@ CREATE TABLE `clinic` (
   `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `phone_number` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `doctor_id` int(11) DEFAULT NULL,
-  `appointments_id` int(11) DEFAULT NULL
+  `appointments_id` int(11) DEFAULT NULL,
+  `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `clinic`
+--
+
+INSERT INTO `clinic` (`id`, `address`, `phone_number`, `doctor_id`, `appointments_id`, `name`) VALUES
+(1, 'doky', '0128547962', 1, NULL, 'test'),
+(2, 'kkkkk', '9856230', 1, NULL, 'jjjjjjjj');
 
 -- --------------------------------------------------------
 
@@ -81,8 +109,16 @@ CREATE TABLE `doctor` (
   `allow_insurance` tinyint(1) DEFAULT NULL,
   `allow_online_payment` tinyint(1) DEFAULT NULL,
   `state` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `area` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+  `area` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `full_name` varchar(255) GENERATED ALWAYS AS (concat(`first_name`,' ',`last_name`)) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `doctor`
+--
+
+INSERT INTO `doctor` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `password`, `gender`, `specialty`, `years_of_exp`, `allow_insurance`, `allow_online_payment`, `state`, `area`) VALUES
+(1, 'kero', 'soliman', '01258764523', 'koskk@kld', '546546546', 'male', 'kkkkk', 12, 1, 1, 'jjj', 'ssss');
 
 -- --------------------------------------------------------
 
@@ -111,6 +147,13 @@ CREATE TABLE `hospital` (
   `phone_number` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `doctor_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hospital`
+--
+
+INSERT INTO `hospital` (`id`, `name`, `address`, `phone_number`, `doctor_id`) VALUES
+(1, 'al7ya', 'doky', '01258432', 1);
 
 -- --------------------------------------------------------
 
@@ -235,7 +278,10 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `doctor_id` (`doctor_id`);
+  ADD KEY `doctor_id` (`doctor_id`),
+  ADD KEY `clinic_id` (`clinic_id`),
+  ADD KEY `fk_appointments_clinic` (`clinic_id`),
+  ADD KEY `fk_appointments_hospital` (`hospital_id`);
 
 --
 -- Indexes for table `clinic`
@@ -339,19 +385,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `clinic`
 --
 ALTER TABLE `clinic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `feedback`
@@ -363,7 +409,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `hospital`
 --
 ALTER TABLE `hospital`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `patient`

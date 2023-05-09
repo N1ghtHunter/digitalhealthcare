@@ -72,7 +72,7 @@ if (isset($_SESSION['date_of_birth'])) {
     <section class="login">
         <div class="login_box">
             <div class="left">
-                <div class="top_link"><a href="#"><img
+                <div class="top_link"><a href="/home.php"><img
                             src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download"
                             alt="">Return home</a></div>
                 <div class="contact">
@@ -123,7 +123,7 @@ if (isset($_SESSION['date_of_birth'])) {
                             <label for="blood_type" style="margin-bottom: 0; margin-top:0px;">Blood
                                 Type:</label>
                             <select name="blood_type" id="blood_type" class="blood_type px-2"
-                                value="<?php echo $blood_type; ?>" required>
+                                value="<?php echo $blood_type; ?>">
                                 <option value="" selected disabled hidden>Select Blood Type</option>
                                 <option value="A+">A+</option>
                                 <option value="A-">A-</option>
@@ -138,11 +138,14 @@ if (isset($_SESSION['date_of_birth'])) {
                         <input type="text" name="insurance_info" placeholder="Insurance Info"
                             value="<?php echo $insurance_info; ?>">
                         <input type="text" name="age" placeholder="Age *" value="<?php echo $age; ?>" required>
+
                         <?php if (isset($_SESSION['error'])) { ?>
                         <p class="error"><?php echo $_SESSION['error']; ?></p>
                         <?php
                             unset($_SESSION['error']);
                         } ?>
+
+
                         <input id="submit" type="submit" value="Sign Up">
                     </form>
                 </div>
