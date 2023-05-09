@@ -25,7 +25,7 @@ class Mailer
     public $from = 'ek4fly@gmail.com';
     public $replyTo = 'ek4fly@gmail.com';
     var $tempVar;
-    public $from_name = 'EK4FLY';
+    public $from_name = 'EK4EFLY';
     public $charSet = "CharSet = 'UTF-8'";
     public $charSetOpt = 0;
     public function __construct()
@@ -60,6 +60,7 @@ class Mailer
         if ($attachement_path != "") {
             $mail->addAttachment($attachement_path);
         }
+        $mail->AddEmbeddedImage('../../image/logo1.png', 'logo');
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $body;

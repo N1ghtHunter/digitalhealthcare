@@ -2,12 +2,28 @@
 
 class Database
 {
-
     private $host = "localhost";
     private $db_name = "digitalhealthcare";
     private $username = "root";
     private $password = "";
+    private static $instance;
     public $conn;
+
+    private function __construct()
+    {
+    }
+
+    private function __clone()
+    {
+    }
+
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
     public function getConnection()
     {
