@@ -1,0 +1,59 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #091E3E;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+td button {
+    padding: 5px 10px;
+    background-color: #091E3E;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+td button:hover {
+    background-color: #091E3E;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+form input[type=text] {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 40px;
+    border: 1px solid #ddd;
+}
+
+form button[type=submit] {
+    padding: 5px 10px;
+    background-color: darkblue;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button[type=submit]:hover {
+    background-color: #aaaaaa;
+}

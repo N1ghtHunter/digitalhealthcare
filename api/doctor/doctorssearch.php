@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 session_start();
 
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 
 $doctorsearch = new DoctorSearch($db);

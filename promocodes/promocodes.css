@@ -1,0 +1,68 @@
+
+body {
+	/* background-color: #89cff0; */
+	background-image: url("pm5.avif");
+	background-size: cover;
+
+}
+
+body, h1, label, input[type="text"], input[type="number"], input[type="date"], input[type="submit"] {
+	color: #0b0b0c;
+}
+
+/* Style the form */
+form {
+	background-color: rgb(206, 205, 205);
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the input fields */
+label {
+	display: block;
+	margin-bottom: 10px;
+}
+
+input[type="text"], input[type="number"], input[type="date"] {
+	display: block;
+	padding: 10px;
+	margin-bottom: 20px;
+	width: 100%;
+	border: none;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type="submit"] {
+	background-color: #fff;
+	color: #0077C2;
+	padding: 10px 20px;
+	border: 2px solid #fff;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+input[type="submit"]:hover {
+	background-color: #0077C2;
+	color: #fff;
+	border-color: #0077C2;
+}
+
+input[type="submit"]:focus {
+	outline: none;
+}
+
+/* Style the error messages */
+.error {
+	color: #f00;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+	font-style: italic;
+}

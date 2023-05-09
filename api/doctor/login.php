@@ -8,7 +8,7 @@ include_once '../objects/doctor.php';
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $database = new Database();
+    $database = Database::getInstance();
     $db = $database->getConnection();
     $doctor = new doctor($db);
     // Get the username and password from the form data
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($result == -1) {
         $_SESSION['error'] = "Your Registration is still pending";
-        header("Location: http://localhost/doctor/login.php");
+        header("Location: http://localhost/doctor/wait-for-approve.php");
         exit();
     } else {
         session_unset();

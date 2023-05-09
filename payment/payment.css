@@ -1,0 +1,152 @@
+:root {
+	--primary: #06A3DA;
+	--secondary: #F57E57;
+	--light: #EEF9FF;
+	--dark: #091E3E;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+header {
+	width: 100vw;
+	min-height: 100vh;
+	background: radial-gradient(#06A3DA, #091E3E);
+	font-size: 1.2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	background: var(--light);
+	max-width: 800px;
+	min-width: 500px;
+	margin: 0 auto;
+
+	min-height: 500px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 0.5rem 1.5rem;
+	gap: 1rem;
+}
+
+.left {
+	flex-basis: 50%;
+}
+
+.right {
+	flex-basis: 50%;
+}
+
+form {
+	padding: 1rem;
+}
+
+h3 {
+	margin-top: 1rem;
+	margin-bottom: 0.5rem;
+	color: var(--primary);
+}
+
+form input[type="text"] {
+	width: 100%;
+	padding: 0.5rem 0.7rem;
+	margin: 0.5rem 0;
+	outline: none;
+	border: 1px solid var(--primary);
+}
+
+#zip {
+	display: flex;
+	margin-top: 0.5rem;
+}
+
+#zip select {
+	padding: 0.5rem 0.7rem;
+	border: 1px solid var(--primary);
+}
+
+#zip input[type="number"] {
+	padding: 0.5rem 0.7rem;
+	margin-left: 5px;
+	border: 1px solid var(--primary);
+}
+
+input[type="submit"] {
+	width: 100%;
+	padding: 0.7rem 1.5rem;
+	background: var(--secondary);
+	color: white;
+	border: none;
+	outline: none;
+	margin-top: 1rem;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+	background-color: var(--primary);
+}
+
+.success-message {
+	color: green;
+	margin-top: 1rem;
+}
+
+@media only screen and (max-width: 770px) {
+	.container {
+		flex-direction: column;
+	}
+
+	body {
+		overflow-x: hidden;
+	}
+}
+
+form input[type="text"],
+form select,
+form input[type="number"] {
+	width: 100%;
+	padding: 0.5rem 0.7rem;
+	margin: 0.5rem 0;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	background-color: var(--light);
+	color: var(--dark);
+	box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+form input[type="text"]:focus,
+form select:focus,
+form input[type="number"]:focus {
+	box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.15),
+		0px 0px 5px var(--secondary);
+}
+
+form label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-size: 1.1rem;
+	color: var(--dark);
+}
+
+#zip {
+	display: flex;
+	margin-top: 0.5rem;
+}
+
+#zip select {
+	padding: 0.5rem 0.7rem;
+	margin-right: 5px;
+}
+
+#zip input[type="number"] {
+	padding: 0.5rem 0.7rem;
+}
