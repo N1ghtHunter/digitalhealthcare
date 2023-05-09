@@ -47,23 +47,22 @@ if (isset($_SESSION['date_of_birth'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .error {
-        color: red;
-        border: 1px solid red;
-        padding: 5px;
-        margin-bottom: 10px;
-        background-color: #ffcccb;
-        border-radius: 5px;
-    }
+        .error {
+            color: red;
+            border: 1px solid red;
+            padding: 5px;
+            margin-bottom: 10px;
+            background-color: #ffcccb;
+            border-radius: 5px;
+        }
     </style>
     <link rel="stylesheet" href="css/signup.css">
 </head>
@@ -72,34 +71,28 @@ if (isset($_SESSION['date_of_birth'])) {
     <section class="login">
         <div class="login_box">
             <div class="left">
-                <div class="top_link"><a href="/home.php"><img
-                            src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download"
-                            alt="">Return home</a></div>
+                <div class="top_link"><a href="/home.php"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Return home</a></div>
                 <div class="contact">
-
                     <form action="api/patient/create.php" method="POST">
                         <h3>SIGN UP</h3>
-                        <input type="text" name="first_name" placeholder="First Name *"
-                            value="<?php echo $firstname; ?>" required>
-                        <input type="text" name="last_name" placeholder="Last Name *" value="<?php echo $lastname; ?>"
-                            required>
+                        <input type="text" name="first_name" placeholder="First Name *" value="<?php echo $firstname; ?>" required>
+                        <input type="text" name="last_name" placeholder="Last Name *" value="<?php echo $lastname; ?>" required>
                         <?php if (isset($_SESSION['name_error'])) { ?>
-                        <p class="error"><?php echo $_SESSION['name_error']; ?></p>
+                            <p class="error"><?php echo $_SESSION['name_error']; ?></p>
                         <?php
                             unset($_SESSION['name_error']);
                         } ?>
                         <input type="email" name="email" placeholder="Email *" value="<?php echo $email; ?>" required>
                         <?php if (isset($_SESSION['email_error'])) { ?>
-                        <p class="error"><?php echo $_SESSION['email_error']; ?></p>
+                            <p class="error"><?php echo $_SESSION['email_error']; ?></p>
                         <?php
                             unset($_SESSION['email_error']);
                         } ?>
-                        <input type="text" name="phone_number" placeholder="Phone *"
-                            value="<?php echo $phone_number; ?>" required>
+                        <input type="text" name="phone_number" placeholder="Phone *" value="<?php echo $phone_number; ?>" required>
                         <p>Gender: *</p>
                         <div class="wrapper">
-                            <input type="radio" name="gender" value="female" value="male" id="option-1" checked>
-                            <input type="radio" name="gender" id="option-2">
+                            <input type="radio" name="gender" value="male" id="option-1" checked>
+                            <input type="radio" name="gender" value="female" id="option-2">
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <span>Male</span>
@@ -111,19 +104,17 @@ if (isset($_SESSION['date_of_birth'])) {
                         </div>
                         <!-- date -->
                         <label for="birthday" style="margin-bottom: 0; margin-top:8px;">Date of birth *</label>
-                        <input type="date" id="birthday" name="date_of_birth" value="<?php echo $date_of_birth; ?>"
-                            required>
+                        <input type="date" id="birthday" name="date_of_birth" value="<?php echo $date_of_birth; ?>" required>
                         <input type="password" name="password" placeholder="Password" required>
                         <?php if (isset($_SESSION['password_error'])) { ?>
-                        <p class="error"><?php echo $_SESSION['password_error']; ?></p>
+                            <p class="error"><?php echo $_SESSION['password_error']; ?></p>
                         <?php
                             unset($_SESSION['password_error']);
                         } ?>
                         <div class="d-flex justify-content-between align-items-center">
                             <label for="blood_type" style="margin-bottom: 0; margin-top:0px;">Blood
                                 Type:</label>
-                            <select name="blood_type" id="blood_type" class="blood_type px-2"
-                                value="<?php echo $blood_type; ?>">
+                            <select name="blood_type" id="blood_type" class="blood_type px-2" value="<?php echo $blood_type; ?>">
                                 <option value="" selected disabled hidden>Select Blood Type</option>
                                 <option value="A+">A+</option>
                                 <option value="A-">A-</option>
@@ -135,24 +126,22 @@ if (isset($_SESSION['date_of_birth'])) {
                                 <option value="O-">O-</option>
                             </select>
                         </div>
-                        <input type="text" name="insurance_info" placeholder="Insurance Info"
-                            value="<?php echo $insurance_info; ?>">
+                        <input type="text" name="insurance_info" placeholder="Insurance Info" value="<?php echo $insurance_info; ?>">
                         <input type="text" name="age" placeholder="Age *" value="<?php echo $age; ?>" required>
 
                         <?php if (isset($_SESSION['error'])) { ?>
-                        <p class="error"><?php echo $_SESSION['error']; ?></p>
+                            <p class="error"><?php echo $_SESSION['error']; ?></p>
                         <?php
                             unset($_SESSION['error']);
                         } ?>
-
-
                         <input id="submit" type="submit" value="Sign Up">
+                        <p class="pt-3">Already have an account? <a href="login.php">Login</a></p>
                     </form>
                 </div>
             </div>
             <div class="right">
                 <div class="right-text">
-                    <h2>Vezzeta</h2>
+                    <h2>Ek4efly</h2>
                     <h5>A DIGITAL HEALTH CARE APPLICATION</h5>
                     <p>
                         &#169; 2023 Vezzeta. All Rights Reserved.

@@ -6,7 +6,7 @@ $id;
 $user;
 $role;
 $logged_in;
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false) {
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSION['role'] != "patient" || !isset($_SESSION['patient'])) {
     $_SESSION['logged_in'] = false;
     header("Location: http://localhost/login.php");
 } else if ($_SESSION['logged_in'] == true && $_SESSION['role'] == "patient") {

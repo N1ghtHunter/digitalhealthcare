@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 session_start();
 $pwdRegEx = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%#*?&]{8,}$/";
 
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 
 $patient = new Patient($db);
@@ -97,12 +97,22 @@ try {
     $result = $patient->create($data);
     if ($result !== -1) {
         session_unset();
-        $_SESSION['success'] = "Patient created successfully";
-        $_SESSION['id'] = $result['id'];
-        $_SESSION['patient'] = $result;
-        $_SESSION['logged_in'] = true;
-        $_SESSION['role'] = "patient";
-        header("Location: ../../home.php");
+        $otp = $patient->generateOTP($result['email']);
+        if (!$otp) {
+            throw new Exception("OTP generation failed");
+        }
+        if (!$patient->sendOTP($otp, $result['email'])) {
+            throw new Exception("OTP sending failed");
+        }
+        $_SESSION['otp'] = $otp;
+        $_SESSION['email'] = $result['email'];
+        header("Location: ../../verification.php");
+        // $_SESSION['success'] = "Patient created successfully";
+        // $_SESSION['id'] = $result['id'];
+        // $_SESSION['patient'] = $result;
+        // $_SESSION['logged_in'] = true;
+        // $_SESSION['role'] = "patient";
+        // header("Location: ../../home.php");
         exit();
     }  else {
         $_SESSION['error'] = "Something went wrong";
@@ -110,7 +120,7 @@ try {
         exit();
     } 
 } catch (\Throwable $th) {
-     $_SESSION['error'] = "Something went wrong";
+    $_SESSION['error'] = $th->getMessage();
     header("Location: ../../index.php");
     exit(); 
 }

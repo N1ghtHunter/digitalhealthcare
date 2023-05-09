@@ -8,7 +8,7 @@ include_once '../objects/patient.php';
 
 // make endpoint to read single patient
 
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 
 $patient = new Patient($db);
