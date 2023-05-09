@@ -1,9 +1,8 @@
 <?php
 
-include_once '../config/database.php';
-include_once '../objects/user.php';
+// include_once '../config/database.php';
+include_once 'user.php';
 
-$database = new Database();
 class  Patient extends User
 {
     private $conn;
@@ -130,4 +129,42 @@ class  Patient extends User
             return false;
         }
     }
+
+    public function update($data){
+        $query = "UPDATE " . this->table_name . " SET ";
+        $query .= "first_name=:first_name, ";
+        $query .= "last_name=:last_name, ";
+        $query .= "phone_number=:phone_number, ";
+        $query .= "gender=:gender, ";
+        $query .= "insurance_info=:insurance_info, ";
+        $query .= "age=:age, ";
+        $query .= "blood_type=:blood_type, ";
+        $query .= "password=:password";
+        $query .="WHERE id =: id"; 
+
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the parameters 
+        $stmt->bindParam(":first_name", $first_name);
+        $stmt->bindParam(":last_name", $last_name);
+        $stmt->bindParam(":phone_number", $phone_number);
+        $stmt->bindParam(":gender", $gender);
+        $stmt->bindParam(":insurance_info", $insurance_info);
+        $stmt->bindParam(":age", $age);
+        $stmt->bindParam(":blood_type", $blood_type);
+        $stmt->bindParam(":password", $password);
+
+
+        // Execute the statement and return the user id if successful
+        if ($stmt->execute()) {
+            // return the full user record
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;
+        } else {
+            return -1;
+        }
+    }
+
+    
 }

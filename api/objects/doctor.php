@@ -1,9 +1,9 @@
 <?php
 
-include_once '../config/database.php';
-include_once '../objects/user.php';
+//include_once '../config/database.php';
+include_once 'user.php';
 
-$database = new Database();
+//$database = new Database();
 class  Doctor extends User
 {
     private $conn;
@@ -185,4 +185,47 @@ class  Doctor extends User
             return false;
         }
     }
-}
+    public function update($data){
+        $query = "UPDATE " . this->table_name . " SET ";
+        $query .= "first_name=:first_name, ";
+        $query .= "last_name=:last_name, ";
+        $query .= "email=:email, ";
+        $query .= "phone_number=:phone_number, ";
+        $query .= "gender=:gender, ";
+        $query .= "specialty=:specialty, ";
+        $query .= "state=:state, ";
+        $query .= "area=:area, ";
+        $query .= "years_of_exp=:years_of_exp, ";
+        $query .= "allow_online_payment=:allow_online_payment, ";
+        $query .= "allow_insurance=:allow_insurance, ";
+        $query .= "password=:password ";
+        $query .="WHERE id =: id"; 
+
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the parameters 
+        $stmt->bindParam(":first_name", $first_name);
+        $stmt->bindParam(":last_name", $last_name);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":phone_number", $phone_number);
+        $stmt->bindParam(":gender", $gender);
+        $stmt->bindParam(":specialty", $specialty);
+        $stmt->bindParam(":state", $state);
+        $stmt->bindParam(":area", $area);
+        $stmt->bindParam(":years_of_exp", $years_of_exp);
+        $stmt->bindParam(":allow_online_payment", $allow_online_payment);
+        $stmt->bindParam(":allow_insurance", $allow_insurance);
+        $stmt->bindParam(":password", $password);
+
+
+        // Execute the statement and return the user id if successful
+        if ($stmt->execute()) {
+            // return the full user record
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;
+        } else {
+            return -1;
+        }
+    }
+} 

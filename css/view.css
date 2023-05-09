@@ -1,0 +1,38 @@
+*{
+    border-radius: 5px;
+}
+body{
+    background-image:url(https://www.praktischarzt.de/wp-content/uploads/2023/03/Becoming-a-medical-doctor-or-physician-in-Germany.jpg);
+    background-repeat: no-repeat;
+    
+ 
+    background-position: center;
+    
+}
+
+label{
+    background-color:black; 
+    color:rgb(64, 168, 238);
+    font-size: larger;
+}
+.container {
+	max-width: 500px;
+	margin:auto;
+    padding-bottom: 200px;
+}
+button {
+    background-color:black;
+    color:rgb(64, 168, 238);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left:150px;
+  }
+  
+button:hover {
+    background-color: #ffffff;
+    color: black;
+  }
