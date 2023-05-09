@@ -1255,11 +1255,12 @@ output {
 
 }
 .fcorn-register p.register-info {
-  background: #b5b5b5;
+  background:  #63c6ef;
   color: #fff;
-  
   padding: 8px 15px;
-  font-size: 40px;
+  text-align: center;
+  font-style: bold;
+  font-size: 24px;
   font-weight: 600;
   margin-top: 30px;
 }
