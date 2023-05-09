@@ -91,7 +91,7 @@ if ($exists) {
     exit();
 }
 
-// get now time to insert as created date of type datetime
+
 
 try {
     $result = $patient->create($data);
@@ -114,13 +114,13 @@ try {
         // $_SESSION['role'] = "patient";
         // header("Location: ../../home.php");
         exit();
-    } else {
+    }  else {
         $_SESSION['error'] = "Something went wrong";
         header("Location: ../../index.php");
         exit();
-    }
+    } 
 } catch (\Throwable $th) {
     $_SESSION['error'] = $th->getMessage();
     header("Location: ../../index.php");
-    exit();
+    exit(); 
 }

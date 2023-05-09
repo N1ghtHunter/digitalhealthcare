@@ -1,7 +1,6 @@
 <?php
 
-include_once '../config/database.php';
-include_once '../objects/user.php';
+include_once 'user.php';
 
 class  Doctor extends User
 {

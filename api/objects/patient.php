@@ -113,6 +113,7 @@ class  Patient extends User
             // return the last inserted record
             $id = $this->conn->lastInsertId();
             $row = $this->readOne($id);
+
             return $row;
         } else {
             return -1;

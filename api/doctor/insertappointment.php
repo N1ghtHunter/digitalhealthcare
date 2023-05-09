@@ -23,7 +23,6 @@ $date = $_POST['date'];
 $start_date = $_POST['start_time'];
 $end_date = $_POST['end_time'];
 $dr_id = $_SESSION['id'];
-echo $place;
 $clinic = new Appointment($db);
 $id_clinic = $clinic->selectClinicIdByName($place);
 $id_hospital = $clinic->selectHospitalIdByName($place);

@@ -40,7 +40,6 @@ $data = array(
 
 // print_r($data);
 $result = $patient->login($data);
-// print_r($result);
 if ($result == false) {
     $_SESSION['error'] = "Wrong email or password";
     header("Location: ../../login.php");
