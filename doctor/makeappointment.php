@@ -1,5 +1,19 @@
 <?php session_start();
 
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSION['role'] != "doctor") {
+    header("Location: http://localhost/doctor/login.php");
+    exit();
+}
+
+$id;
+$doctor;
+if (isset($_SESSION['doctor'])) {
+    $doctor = $_SESSION['doctor'];
+    $id = $doctor['id'];
+} else {
+    header("Location: http://localhost/doctor/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,14 +64,15 @@
                             <form>
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
-                                        <select name="place" class="form-select bg-light border-0" style="height: 55px;">
+                                        <label for="name">Place</label>
+                                        <select id="clinic_hospital" name="place" class="form-select bg-light border-0" style="height: 55px;">
                                             <option selected>Select clinic Or hospital </option>
                                             <?php
                                             include_once '../api/config/database.php';
                                             include_once '../api/objects/appointment.php';
                                             $db = $database->getConnection();
                                             $clinic = new Appointment($db);
-                                            $data = $clinic->selectClinicsHospitalByDoctorId(1);
+                                            $data = $clinic->selectClinicsHospitalByDoctorId($doctor['id']);
                                             for ($i = 0; $i < count($data); $i++) { ?>
                                                 <?php $test = implode(', ', $data[$i]); ?>
                                                 <option value="<?php echo $test ?>">
@@ -66,22 +81,26 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input name="cost" type="text" class="form-control bg-light border-0" placeholder="Cost" style="height: 55px;">
+                                        <label for="fees">Fees</label>
+                                        <input id="fees" name="cost" type="text" class="form-control bg-light border-0" placeholder="fees" style="height: 55px;">
                                     </div>
 
                                     <div class="col-12 col-sm-6">
                                         <div class="date" id="date1" data-target-input="nearest">
-                                            <input name="date" type="date" class="form-control bg-light border-0 datetimepicker-input" placeholder="Appointment Date" data-target="#date1" data-toggle="datetimepicker" style="height: 55px;">
+                                            <label for="date">Appointment Date</label>
+                                            <input id="date" name="date" type="date" class="form-control bg-light border-0 datetimepicker-input" placeholder="Appointment Date" data-target="#date1" data-toggle="datetimepicker" style="height: 55px;">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="time" id="time1" data-target-input="nearest">
-                                            <input name="start_time" type="time" min="00:00" max="24:00" class="form-control bg-light border-0 datetimepicker-input" placeholder="Start Time" data-target="#time1" data-toggle="datetimepicker" style="height: 55px;">
+                                            <label for="start_time">Start Time</label>
+                                            <input id="start_time" name="start_time" type="time" min="00:00" max="24:00" class="form-control bg-light border-0 datetimepicker-input" placeholder="Start Time" data-target="#time1" data-toggle="datetimepicker" style="height: 55px;">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="time2" id="time2" data-target-input="nearest">
-                                            <input name="end_time" type="time" min="00:00" max="24:00" class="form-control bg-light border-0 datetimepicker-input" placeholder="End Time" data-target="#time2" data-toggle="datetimepicker" style="height: 55px;">
+                                            <label for="end_time">End Time</label>
+                                            <input id="end_time" name="end_time" type="time" min="00:00" max="24:00" class="form-control bg-light border-0 datetimepicker-input" placeholder="End Time" data-target="#time2" data-toggle="datetimepicker" style="height: 55px;">
                                         </div>
                                     </div>
                                     <?php

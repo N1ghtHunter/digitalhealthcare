@@ -1,15 +1,16 @@
 <?php
- session_start();
+session_start();
 // Connect to the database
 include_once '../config/database.php';
 include_once '../objects/clinic.php';
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
+
 $clinic = new CLinic($db);
 // Get the ID of the record to update from the URL parameter
 $id = $_POST["id"];
 $row = $clinic->getClinic($id);
-$doctor_id =$row["doctor_id"];
+$doctor_id = $row["doctor_id"];
 // Update the record in the table
 if (isset($_POST["name"]) && isset($_POST["address"]) && isset($_POST["phone_number"])) {
     $name = $_POST["name"];
@@ -31,10 +32,12 @@ if (isset($_POST["name"]) && isset($_POST["address"]) && isset($_POST["phone_num
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Edit clinic</title>
 </head>
-<body>                                                          
+
+<body>
 
     <form method="POST" action="">
         <?php if (isset($error_msg)) { ?>
@@ -52,4 +55,5 @@ if (isset($_POST["name"]) && isset($_POST["address"]) && isset($_POST["phone_num
     </form>
 
 </body>
+
 </html>

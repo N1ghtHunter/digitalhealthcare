@@ -325,4 +325,78 @@ class  Patient extends User
             return false;
         }
     }
+
+    public function sendReservationConfirmation($id, $date, $start_time, $end_time, $cost)
+    {
+        $patient = $this->readOne($id);
+        $mailer = new Mailer();
+        $subject = "Reservation Confirmation";
+        $reservation_confirmation_email = '<html>
+  <head>
+    <style>
+      body {
+        background-color: #EEF9FF;
+        color: #091E3E;
+        font-family: Arial, sans-serif;
+      }
+      
+      h1 {
+        color: #06A3DA;
+        font-size: 24px;
+        margin-bottom: 0;
+      }
+      
+      p {
+        font-size: 16px;
+        margin-top: 0;
+      }
+      
+      .reservation-details {
+        background-color: #06A3DA;
+        color: #EEF9FF;
+        font-size: 20px;
+        padding: 10px;
+        margin: 20px 0;
+        text-align: left;
+      }
+      
+      .cta-button {
+        background-color: #F57E57;
+        color: #EEF9FF;
+        display: inline-block;
+        font-size: 16px;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+      }
+      
+      .cta-button:hover {
+        background-color: #091E3E;
+      }
+    </style>
+  </head>
+  <body>
+  <div style="text-align: center;">
+  <img 
+  style="width: 200px; margin:0 auto; display: block;"
+  alt="Logo" src="cid:logo">
+    <h1>Reservation Confirmed</h1>
+    <p>Your reservation for ' . $date . ' from ' . $start_time . ' to ' . $end_time . ' has been confirmed. The total cost of your reservation is $' . $cost . '.</p>
+    <div class="reservation-details">
+        <p>Reservation Details:</p>
+        <ul>
+            <li>On: ' . $date . '</li>
+            <li>From: ' . $start_time . '</li>
+            <li>To: ' . $end_time . '</li>
+            <li>Total Cost: ' . $cost . ' LE </li>
+        </ul>
+    </div>
+    <p>Thank you for choosing our service. We look forward to seeing you soon!</p>
+  </div>
+  </body>
+</html>';
+        $body = $reservation_confirmation_email;
+        $res = $mailer->sendEmail(to: $patient['email'], subject: $subject, body: $body);
+        return $res;
+    }
 }

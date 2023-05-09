@@ -1,6 +1,5 @@
 <?php
 
-include_once '../config/database.php';
 class Appointment
 {
     private $appDate;

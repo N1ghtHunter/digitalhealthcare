@@ -1,68 +1,32 @@
 <?php
+session_start();
 
-class PaymentValidator {
-  private $name;
-  private $email;
-  private $address;
-  private $city;
-  private $state;
-  private $zip;
-  private $card_number;
-  private $exp_month;
-  private $exp_year;
-  private $cvv;
+//   $reservationData = array(
+//   "date" => $date,
+//   "start_time" => $start_time,
+//   "end_time" => $end_time,
+//   "doctor_id" => $doctor_id,
+//   "patient_id" => $id,
+//   "clinic_id" => $clinic_id,
+//   "hospital_id" => $hospital_id,
+//   "cost" => $cost,
+// );
+$reservationData = $_SESSION['reservationData'];
 
-  public function __construct($name, $email, $address, $city, $state, $zip, $card_number, $exp_month, $exp_year, $cvv) {
-    $this->name = $name;
-    $this->email = $email;
-    $this->address = $address;
-    $this->city = $city;
-    $this->state = $state;
-    $this->zip = $zip;
-    $this->card_number = $card_number;
-    $this->exp_month = $exp_month;
-    $this->exp_year = $exp_year;
-    $this->cvv = $cvv;
-  }
-
-  public function validate() {
-    // Validate form data
-    $name = $this->test_input($this->name);
-    $email = $this->test_input($this->email);
-    $address = $this->test_input($this->address);
-    $city = $this->test_input($this->city);
-    $state = $this->test_input($this->state);
-    $zip = $this->test_input($this->zip);
-    $card_number = $this->test_input($this->card_number);
-    $exp_month = $this->test_input($this->exp_month);
-    $exp_year = $this->test_input($this->exp_year);
-    $cvv = $this->test_input($this->cvv);
-
-    // Check if all fields are filled
-    if (!empty($name) && !empty($email) && !empty($address) && !empty($city) && !empty($state) && !empty($zip) && !empty($card_number) && !empty($exp_month) && !empty($exp_year) && !empty($cvv)) {
-      // Payment is successful
-      return "Payment successful!";
-    } else {
-      // Display error message
-      return "Please fill in all fields.";
-    }
-  }
-
-  private function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSION['role'] != "patient" || !isset($_SESSION['patient']) || !$_SESSION['patient']) {
+  echo '<script>alert("Something went wrong!")</script>';
+  echo '<script>window.location.href = "/home.php";</script>';
+}
+if (!isset($_SESSION['reservationData'])) {
+  echo '<script>alert("Something went wrong!")</script>';
+  echo '<script>window.location.href = "/home.php";</script>';
+}
+if (!isset($_SESSION['reservationData']['cost'])) {
+  echo '<script>alert("Something went wrong!")</script>';
+  echo '<script>window.location.href = "/home.php";</script>';
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	//   error_reporting(E_ERROR | E_PARSE);
-  $validator = new PaymentValidator($_POST["name"], $_POST["email"], $_POST["address"], $_POST["city"], $_POST["state"], $_POST["zip"], $_POST["card_number"], $_POST["exp_month"], $_POST["exp_year"], $_POST["cvv"]);
-
-  // Validate form data and display message
-  echo $validator->validate();
-}
+//  extract every element in array from the query string
 
 ?>
 
@@ -70,87 +34,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Payment</title>
-    <link rel="stylesheet" type="text/css" href="payment.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payment</title>
+  <link rel="stylesheet" type="text/css" href="payment.css">
 </head>
 
 <body>
-    <?php 
-    session_start();
-      if(isset($_SESSION['message'])){
-        echo $_SESSION['message'];
-      }
-      ?>
-    <header>
-        <!-- <div class="container"> -->
-        <form action="/api/objects/payment.php" class="container" method="post">
-            <div class="left">
-                <h3>BILLING ADDRESS</h3>
-                Full name
-                <input type="text" name="name" placeholder="Enter name">
-                Email
-                <input type="text" name="email" placeholder="Enter email">
+  <header>
+    <!-- <div class="container"> -->
+    <form action="/api/objects/paymentValidator.php" class="container" method="post">
+      <div class="right">
+        <h3>PAYMENT</h3>
+        <!-- <form action="/" method="post"> -->
+        Accepted Card <br>
+        <img src="image/card1.png" width="100">
+        <img src="image/card2.png" width="50">
+        <br><br>
+        <label for="card_number">Credit card number</label>
+        <input id="card_number" type="text" name="card_number" placeholder="Enter card number">
+        <label for="exp_month">Exp month</label>
+        <select id="exp_month" name="exp_month">
+          <!-- options all monthes with value from 1 to 12 -->
+          <option selected disabled>Choose Month..</option>
+          <option value="1">January</option>
+          <option value="2">Febuary</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">Augest</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">Novemeber</option>
+          <option value="12">December</option>
+        </select>
+        <div id="Zip">
+          <label for="exp_year">
+            Exp year
+          </label>
+          <select name="exp_year" id="exp_year">
+            <option disabled selected>Choose Year..</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+          </select>
+          <label for="cvv">
+            CVV
+          </label>
+          <input type="text" name="cvv" id="cvv" placeholder="CVV">
+        </div>
+        <input type="submit" value="Pay <?php echo $_SESSION['reservationData']['cost']; ?>LE">
+      </div>
+      <div class="left">
+        <h3>BILLING ADDRESS</h3>
+        <label for="name">Full Name</label>
+        <input type="text" name="name" placeholder="Enter name">
+        <label for="address">Address</label>
+        <input type="text" name="address" placeholder="Enter address">
+        <label for="city">City</label>
+        <input type="text" name="city" placeholder="Enter city">
+        <!-- </form> -->
+      </div>
+    </form>
 
-                Address
-                <input type="text" name="address" placeholder="Enter address">
-
-                City
-                <input type="text" name="city" placeholder="Enter City">
-                <div id="zip">
-                    <label>
-                        State
-                        <select name="state">
-                            <option>Choose State..</option>
-                            <option>Cairo</option>
-                            <option>Alexandria</option>
-                            <option>Aswan</option>
-                            <option>Luxor</option>
-                        </select>
-                    </label>
-                    <label>
-                        Zip code
-                        <input type="number" name="zip" placeholder="Zip code">
-                    </label>
-                </div>
-                <!-- </form> -->
-            </div>
-            <div class="right">
-                <h3>PAYMENT</h3>
-                <!-- <form action="/" method="post"> -->
-                Accepted Card <br>
-                <img src="image/card1.png" width="100">
-                <img src="image/card2.png" width="50">
-                <br><br>
-
-                Credit card number
-                <input type="text" name="card_number" placeholder="Enter card number">
-
-                Exp month
-                <input type="text" name="exp_month" placeholder="Enter Month">
-                <div id="Zip">
-                    <label>
-                        Exp year
-                        <select name="exp_year">
-                            <option>Choose Year..</option>
-                            <option>2022</option>
-                            <option>2023</option>
-                            <option>2024</option>
-                            <option>2025</option>
-                        </select>
-                    </label>
-                    <label>
-                        CVV
-                        <input type="number" name="cvv" placeholder="CVV">
-                    </label>
-                </div>
-                <input type="submit" name="" value="Submit">
-            </div>
-        </form>
-        <!-- </div> -->
-        <!-- </div> -->
-    </header>
+  </header>
 </body>
 
 </html>

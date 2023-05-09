@@ -4,7 +4,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     text-align: left;
     padding: 10px;
     border: 1px solid #ddd;
@@ -39,7 +40,7 @@ form label {
 
 form input[type=text] {
     display: block;
-    width: 50%;
+    width: 100%;
     padding: 5px;
     margin-bottom: 40px;
     border: 1px solid #ddd;

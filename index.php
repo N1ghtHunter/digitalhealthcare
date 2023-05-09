@@ -1,6 +1,11 @@
 <?php
 session_start();
+include_once 'api/config/database.php';
+include_once 'api/shared/insurance.php';
 
+$database = Database::getInstance();
+$db = $database->getConnection();
+$insurance = new Insurance($db);
 
 $firstname = '';
 $lastname = '';
@@ -126,7 +131,21 @@ if (isset($_SESSION['date_of_birth'])) {
                                 <option value="O-">O-</option>
                             </select>
                         </div>
-                        <input type="text" name="insurance_info" placeholder="Insurance Info" value="<?php echo $insurance_info; ?>">
+                        <!-- <input type="text" name="insurance_info" placeholder="Insurance Info" value=" -->
+                        <?php
+                        // echo $insurance_info; 
+                        ?>
+                        <!-- "> -->
+                        <label for="insurance_info" style="margin-bottom: 0; margin-top:8px;">Insurance Info:</label>
+                        <select name="insurance_info" id="insurance_info" class="insurance_info px-2" value="<?php echo $insurance_info; ?>">
+                            <option value="" selected>NONE</option>
+                            <?php
+                            $insurances = $insurance->getAll();
+                            foreach ($insurances as $insurance) {
+                                echo "<option value='" . $insurance['name'] . "'>" . $insurance['name'] . "</option>";
+                            }
+                            ?>
+                        </select>
                         <input type="text" name="age" placeholder="Age *" value="<?php echo $age; ?>" required>
 
                         <?php if (isset($_SESSION['error'])) { ?>
