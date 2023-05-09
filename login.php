@@ -70,10 +70,10 @@ if (isset($_SESSION['email'])) {
             </div>
             <div class="right">
                 <div class="right-text">
-                    <h2>Ek4fly</h2>
+                    <h2>Ek4efly</h2>
                     <h5>A DIGITAL HEALTH CARE APPLICATION</h5>
                     <p>
-                        &#169; 2023 Ek4fly. All Rights Reserved.
+                        &#169; 2023 Ek4efly. All Rights Reserved.
                     </p>
                 </div>
             </div>

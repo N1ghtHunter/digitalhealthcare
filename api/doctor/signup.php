@@ -14,22 +14,22 @@ session_start();
 
 $pwdRegEx = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%#*?&]{8,}$/";
 
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 $doctor = new Doctor($db);
 
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 $email = $_POST['email'];
-$phone_number = $_POST['phone_number'];
-$gender = $_POST['gender'];
-$specialty =  $_POST['specialty'];
+$password = $_POST['password'];
 $state =  $_POST['state'];
 $area =  $_POST['area'];
+$gender = $_POST['gender'];
+$phone_number = $_POST['phone_number'];
+$specialty =  $_POST['specialty'];
 $years_of_exp =  $_POST['years_of_exp'];
 $allow_online_payment = $_POST['allow_online_payment'];
 $allow_insurance = $_POST['allow_insurance'];
-$password = $_POST['password'];
 
 $_SESSION['first_name'] = $first_name;
 $_SESSION['last_name'] = $last_name;
@@ -104,8 +104,7 @@ try {
     $result = $doctor->create($data);
     if ($result != -1) {
         session_unset();
-        $_SESSION['success'] = "Doctor account created successfully";
-        header("Location: ../../home.php");
+        header("Location: ../../doctor/wait-for-approve.php");
         exit();
     } else {
         $_SESSION['error'] = "Something went wrong";

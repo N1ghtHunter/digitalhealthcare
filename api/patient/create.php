@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 session_start();
 $pwdRegEx = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%#*?&]{8,}$/";
 
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 
 $patient = new Patient($db);

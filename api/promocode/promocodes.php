@@ -7,7 +7,7 @@ $pc = $_POST['promo_code'];
 $discount = $_POST['discount'];
 $exp = $_POST['expiration_date'];
 
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 
 $promo = new PromoCode($db);

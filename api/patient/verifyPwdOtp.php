@@ -23,7 +23,7 @@ $otp = $input1 . $input2 . $input3 . $input4 . $input5 . $input6;
 
 $email = $_SESSION['email'];
 // check if otp is correct
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 $patient = new Patient($db);
 

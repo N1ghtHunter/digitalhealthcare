@@ -4,7 +4,6 @@ include_once '../config/database.php';
 include_once '../objects/user.php';
 
 
-$database = new Database();
 
 class  Admin extends User
 {
@@ -87,7 +86,7 @@ class  Admin extends User
             return false;
         }
     }
-     public function login($data)
+    public function login($data)
     {
 
         $username = $data['uname'];
@@ -98,14 +97,10 @@ class  Admin extends User
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         // verify password hash
-        if ( isset ($row) && isset ($row["password"]) && $password==$row['password']) {
+        if (isset($row) && isset($row["password"]) && $password == $row['password']) {
             return $row;
         } else {
             return false;
         }
-
     }
-
-
-   
 }

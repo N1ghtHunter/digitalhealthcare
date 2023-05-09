@@ -13,7 +13,6 @@ require '../../vendor/autoload.php';
 
 //Create an instance; passing `true` enables exceptions
 
-$database = new Database();
 
 $mail = new PHPMailer(true);
 
@@ -117,11 +116,16 @@ class PromoCode
           </style>
         </head>
         <body>
+        <div style="text-align: center;">
+        <img 
+        style="width: 200px; margin:0 auto; display: block;"
+        alt="Logo" src="cid:logo">
           <h1>Get ' . $discount . '% off your next purchase!</h1>
           <p>Use promo code:</p>
           <div class="promo-code">' . $promocode . '</div>
           <p>Enter this code at checkout to receive ' . $discount . '% off your order. Hurry, this offer expires on ' . $exp . ' !</p>
 <a href="http://localhost/login.php" class="cta-button">Book now</a>
+        </div>
 </body>
 
 </html>';
@@ -181,11 +185,16 @@ class PromoCode
           </style>
         </head>
         <body>
+        <div style="text-align: center;">
+        <img 
+        style="width: 200px; margin:0 auto; display: block;"
+        alt="Logo" src="cid:logo">
           <h1>Get ' . $discount . '% off your next purchase!</h1>
           <p>Use promo code:</p>
           <div class="promo-code">' . $promocode . '</div>
           <p>Enter this code at checkout to receive ' . $discount . '% off your order. Hurry, this offer expires on ' . $exp . ' !</p>
 <a href="http://localhost/login.php" class="cta-button">Book now</a>
+        </div>
 </body>
 
 </html>';

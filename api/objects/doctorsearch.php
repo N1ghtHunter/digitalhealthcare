@@ -1,7 +1,6 @@
 <?php
 include_once '../objects/search.php';
 include_once '../config/database.php';
-$database = new Database();
 class DoctorSearch implements search
 {
     private $conn;
@@ -20,7 +19,6 @@ class DoctorSearch implements search
         $specialty = ""
 
     ) {
-        $doctors = array();
 
         // Build query
         $query = "SELECT DISTINCT d.id,
@@ -72,6 +70,7 @@ class DoctorSearch implements search
         // $stmt->bindParam(":years_of_exp", $yearsOfExperience, PDO::PARAM_INT);
 
 
+        $doctors = array();
         // Execute statement
         if ($stmt->execute())
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

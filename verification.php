@@ -98,7 +98,13 @@
     }
     $email = $_SESSION['email'];
     // show first 2 letters of email and last 4 letters of email before @ and the rest of the letters are replaced with *
-    $email = substr($email, 0, 2) . str_repeat("*", strlen($email) - 6) . substr($email, -4);
+    // get the part before @
+    $beforeAt = substr($email, 0, strpos($email, "@"));
+    // get the part after @
+    $afterAt = substr($email, strpos($email, "@"));
+    // keep the first 2 letters of the part before @ and last 2 letters of the part before @ and replace the rest with *
+    $email = substr($beforeAt, 0, 2) . str_repeat("*", strlen($beforeAt) - 2) . substr($beforeAt, -3) . $afterAt;
+
     echo "<script>console.log('$email')</script>";
     ?>
     <div class="container height-100 d-flex justify-content-center align-items-center">
