@@ -77,7 +77,9 @@ unset($user['password']);
 
 		<nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
 			<a href="index.html" class="navbar-brand p-0">
-				<h1 class="m-0 text-primary"><i class="fa fa-tooth me-2"></i>DentCare</h1>
+				<div class="py-2 text-primary">
+					<img src="../image/logo1.png" alt="logo" style="width: 200px;">
+				</div>
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 				<span class="navbar-toggler-icon"></span>
@@ -93,7 +95,7 @@ unset($user['password']);
 				<a href="#searchform" class="btn text-dark"><i class="fa fa-search"></i></a>
 				<!-- <a href="appointment.html" class="btn btn-primary py-2 px-4 ms-3">Appointment</a> -->
 				<?php if (isset($_SESSION['doctor'])) : ?>
-					<a href="profile.php" class="btn btn-primary py-2 px-4 ms-3">Profile</a>
+					<a href="viewprofile.php" class="btn btn-primary py-2 px-4 ms-3">Profile</a>
 					<form action="../api/shared/drLogout.php" method="POST" style="margin:0;">
 						<button type="submit" class="btn btn-secondary py-2 px-4 ms-3">Logout</button>
 					</form>
