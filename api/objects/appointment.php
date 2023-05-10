@@ -153,6 +153,56 @@ class Appointment
 
         return $appointment;
     }
+
+    public function getFullByAppointmentId($id)
+    {
+        $appointment = array();
+
+        // Build query
+        $query = "SELECT DISTINCT 
+        a.id as appointment_id,
+        a.date,
+        a.start_time,
+        a.end_time,
+        a.cost,
+        a.clinic_id,
+        a.hospital_id,
+        c.id as clinic_id,
+        c.address as clinic_address,
+        c.name as clinic_name,
+        c.phone_number as clinic_phone,
+        h.id as hospital_id,
+        h.name as hospital_name,
+        h.address as hospital_address,
+        h.phone_number as hospital_phone,
+        d.id as id,
+        d.full_name as doctor_name,
+        d.specialty as specialty,
+        d.state as state,
+        d.area as area,
+        d.years_of_exp as years_of_exp,
+        d.allow_insurance as allow_insurance,
+        d.allow_online_payment as allow_online_payment
+        FROM appointments a
+        LEFT JOIN clinic c ON a.clinic_id=c.id
+        LEFT JOIN hospital h ON a.hospital_id = h.id
+        inner JOIN doctor d ON a.doctor_id = d.id
+        WHERE a.id LIKE :id";
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+
+        $stmt->bindParam(":id", $id);
+
+        if ($stmt->execute()) {
+            $appointment = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $appointment;
+        } else {
+            return -1;
+        }
+    }
+
+
     public function deleteAppointment($id)
     {
         // Build query

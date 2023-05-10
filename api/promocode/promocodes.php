@@ -21,10 +21,10 @@ if ($result == -1) {
 	if ($result != -1) {
 		$res = $promo->sendMailToAllUsers($patient->getAllMails(), $pc, $discount, $exp);
 		if ($res == true) {
-			echo "success";
+			header("Location: ../../admin/promocode.php");
 			exit();
 		} else {
-			echo "error";
+			header("Location: ../../admin/promocode.php");
 			exit();
 		}
 	}

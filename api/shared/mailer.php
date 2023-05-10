@@ -17,8 +17,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 class Mailer
 {
-    private $conn;
-    private $table_name;
     private $host = 'smtp.gmail.com';
     private $userName = 'ek4fly@gmail.com';
     private $password = 'fxzaydpnynjtdela';
@@ -98,6 +96,7 @@ class Mailer
         if ($attachement_path != "") {
             $mail->addAttachment($attachement_path);
         }
+        $mail->AddEmbeddedImage('../../image/logo1.png', 'logo');
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $body;

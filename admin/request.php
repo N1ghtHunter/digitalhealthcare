@@ -9,7 +9,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
    <!-- site metas -->
-   <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+   <title>Admin</title>
    <meta name="keywords" content="">
    <meta name="description" content="">
    <meta name="author" content="">
@@ -132,42 +132,24 @@
                for ($i = 0; $i < count($data); $i++) {
                   if (!$data[$i]['request_status']) {
                   ?>
-
-
-
                      <div class="card p-3">
-
                         <div class="d-flex align-items">
-
-
-
                            <div class="ml-3 w-100">
-
                               <h4 class="mb-0 mt-0"><?php echo $data[$i]['full_name']; ?></h4>
                               <span><?php echo $data[$i]['specialty']; ?></span><br>
                               <span><?php echo $data[$i]['phone_number']; ?></span>
                               <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-
                                  <div class="d-flex flex-column">
-
                                     <span class="articles">Gender</span>
                                     <span class="number1"><?php echo $data[$i]['gender']; ?></span>
-
                                  </div>
-
                                  <div class="d-flex flex-column">
-
                                     <span class="followers">Area</span>
                                     <span class="number2"><?php echo $data[$i]['area']; ?></span>
-
                                  </div>
-
-
                                  <div class="d-flex flex-column">
-
                                     <span class="rating">State</span>
                                     <span class="number3"><?php echo $data[$i]['state']; ?></span>
-
                                  </div>
                                  <div class="d-flex flex-column">
 
@@ -182,6 +164,7 @@
                               <div class="button mt-2 d-flex flex-row align-items-center">
                                  <form action="../api/admin/approverequest.php" method="POST" id="appform">
                                     <input name="approve" value="<?php echo $data[$i]['request_id'] ?>" type="text" placeholder=<?php echo $data[$i]['request_id'] ?> style="display:none">
+                                    <input name="doctor_id" value="<?php echo $data[$i]['doctor_id'] ?>" type="hidden" placeholder=<?php echo $data[$i]['doctor_id'] ?> style="display:none">
                                     <div class="button mt-2 d-flex flex-row align-items-center">
                                        <button class="btn btn-sm btn-outline-primary w-100" type="submit">Approve</button>
                                     </div>

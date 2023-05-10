@@ -17,6 +17,7 @@ class Request
         r.id as request_id,
         r.request_date,
         r.request_status,
+        d.id as doctor_id,
         d.full_name,
         d.phone_number,
         d.gender,
@@ -40,7 +41,7 @@ class Request
     public function ApproveRequest($id)
     {
         // Build query
-        $query = "UPDATE requests SET request_status = 1 WHERE doctor_id like :id";
+        $query = "UPDATE requests SET request_status = 1 WHERE requests.id like :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         // bind parameters

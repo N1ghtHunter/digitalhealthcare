@@ -187,7 +187,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
                 <div class="col-lg-12">
                     <div class="section-title text-center">
                         <div class="title-text">
-                            <h2>Event Schedule</h2>
+                            <h2>Appointment</h2>
                         </div>
 
                     </div>
@@ -199,7 +199,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
                 <div class="col-lg-12">
                     <ul class="nav custom-tab" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="home-taThursday" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Appointment</a>
+                            <a class="nav-link active show" id="home-taThursday" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"></a>
                         </li>
 
 

@@ -20,10 +20,10 @@ $app_id = $_POST["delete_app"];
 if ($appointment->deleteAppointment($app_id)) {
 
     $_SESSION["delete_appointment_success"] = true;
-    header("Location: ../../doctor/makeappointment.php ");
+    header("Location: ../../doctor/home.php ");
     exit();
 } else {
     $_SESSION["delete_appointment_success"] = false;
-    header("Location: ../../doctor/makeappointment.php ");
+    header("Location: ../../doctor/home.php ");
     exit();
 }

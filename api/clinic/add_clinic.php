@@ -7,7 +7,7 @@ $db = Database::getInstance();
 $conn = $db->getConnection();
 $clinic = new Clinic($conn);
 // Insert data into the table
-if (isset($_POST["name"]) && isset($_POST["address"]) && isset($_POST["phone_number"]) && isset($_POST["doctor_id"])) {
+if (isset($_POST["name"]) && isset($_POST["address"]) && isset($_POST["phone_number"])) {
     $name = $_POST["name"];
     $address = $_POST["address"];
     $phone_number = $_POST["phone_number"];

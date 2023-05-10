@@ -2,6 +2,7 @@
 
 
 include_once 'user.php';
+include_once __DIR__ . '/../shared/mailer.php';
 
 class  Doctor extends User
 {
@@ -212,7 +213,7 @@ class  Doctor extends User
         // Execute statement
         $stmt->execute();
         return true;
-
+    }
     public function update($id, $first_name, $last_name, $phone_number, $years_of_exp, $allow_online_payment, $allow_insurance)
     {
         $query = "UPDATE " . $this->table_name . " SET first_name = ?, last_name = ?, phone_number = ?, years_of_exp = ?, allow_online_payment = ?, allow_insurance = ? WHERE id = ?";
@@ -229,5 +230,82 @@ class  Doctor extends User
         } else {
             return false;
         }
+    }
+
+    public function sendApproveEmail($dr)
+    {
+        $mailer = new Mailer();
+        $subject = "Your regestration has been approved";
+        $doctor_registration_email = '
+<html>
+  <head>
+    <style>
+      body {
+        background-color: #EEF9FF;
+        color: #091E3E;
+        font-family: Arial, sans-serif;
+      }
+      
+      h1 {
+        color: #06A3DA;
+        font-size: 24px;
+        margin-bottom: 0;
+      }
+      
+      h3{
+        color: #091E3E;
+        font-size: 20px;
+        margin-top: 0;
+      }
+
+      p {
+        font-size: 16px;
+        margin-top: 0;
+      }
+      
+      .registration-details {
+        background-color: #06A3DA;
+        color: #EEF9FF;
+        font-size: 20px;
+        padding: 10px;
+        margin: 20px 0;
+      }
+      
+      .cta-button {
+        background-color: #F57E57;
+        color: #EEF9FF;
+        display: inline-block;
+        font-size: 16px;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+      }
+      
+      .cta-button:hover {
+        background-color: #091E3E;
+      }
+    </style>
+  </head>
+  <body>
+  <div style="text-align: center;">
+  <img 
+  style="width: 200px; margin:0 auto; display: block;"
+  alt="Logo" src="cid:logo">
+    <h1>Doctor Registration Confirmed</h1>
+    <h3>Dear Dr. ' . $dr["full_name"] . '</h3>
+    <p>Your registration as a doctor has been confirmed. Thank you for joining our platform.</p>
+    <div class="registration-details">
+        <p>Registration Details:</p>
+        <ul>
+            <li>Full Name: ' . $dr["full_name"] . '</li>
+            <li>Specialization: ' . $dr['speciality'] . '</li>
+            <li>Email: ' . $dr["email"] . '</li>
+        </ul>
+    </div>
+    <p>Thank you for choosing our platform. We look forward to working with you!</p>
+  </div>
+  </body>
+</html>';
+        $mailer->sendEmail($dr['email'], $subject, $doctor_registration_email);
     }
 }

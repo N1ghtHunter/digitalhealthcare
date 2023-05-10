@@ -17,13 +17,14 @@ $db = $database->getConnection();
 
 $appointment = new Appointment($db);
 
-if ($appointment->deleteAllAppointment(1)) {
+$dr_id = $_SESSION['doctor']['id'];
+if ($appointment->deleteAllAppointment($dr_id)) {
 
     $_SESSION["delete_all_appointment_success"] = true;
-    header("Location: ../../doctor/makeappointment.php ");
+    header("Location: ../../doctor/home.php ");
     exit();
 } else {
     $_SESSION["delete_all_appointment_success"] = false;
-    header("Location: ../../doctor/makeappointment.php ");
+    header("Location: ../../doctor/home.php ");
     exit();
 }

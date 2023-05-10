@@ -1,42 +1,44 @@
-<!-- // Purpose: This file will display the search results -->
 <?php
 session_start();
 
+include_once 'api/config/database.php';
+include_once 'api/objects/appointment.php';
+
+$database = Database::getInstance();
+$db = $database->getConnection();
+$appointment = new Appointment($db);
+
+// if user is not logged in , set logged_in to false
 $id;
 $user;
 $role;
 $logged_in;
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSION['role'] != "patient" || !isset($_SESSION['patient'])) {
     $_SESSION['logged_in'] = false;
-    header("Location: http://localhost/login.php");
+    header("Location: login.php");
 } else if ($_SESSION['logged_in'] == true && $_SESSION['role'] == "patient") {
     $id = $_SESSION['id'];
     $user = $_SESSION['patient'];
     $role = $_SESSION['role'];
     $logged_in = $_SESSION['logged_in'];
 }
-if (!isset($_SESSION['searchResults'])) {
-    header("Location: home.php");
-    exit();
-}
-$searchResults = $_SESSION['searchResults'];
-unset($_SESSION['compare']);
-$_SESSION['compare'] = array();
 
+$appIds = $_GET['compare'];
+// print_r($appIds);
+// convert the string to array of appIds ["1","2","3"]
+$appIds = json_decode($appIds);
+// print_r($appIds);
+// get the appointments from the database
 
-// this is a search result page
-// it will display the search results
-// it will also display the filters
-// it will also display the sort options
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -54,15 +56,29 @@ $_SESSION['compare'] = array();
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="lib/twentytwenty/twentytwenty.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="css/cards.css">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/searchBar.css">
 </head>
 
 <body>
+    <!-- Spinner Start -->
+    <!-- <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary m-1" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div> -->
+    <!-- Spinner End -->
+    <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <a href="index.html" class="navbar-brand p-0">
             <div class="py-2 text-primary">
@@ -102,21 +118,16 @@ $_SESSION['compare'] = array();
 
         </div>
     </nav>
-    <!-- search result -->
+
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container d-flex flex-wrap gap-3">
-            <!-- use bootstrap cards to display results -->
-            <?php if (count($searchResults) == 0) : ?>
-                <h1 class="text-center">No results found</h1>
-            <?php endif;
-            // display the results in cards
-
-            foreach ($searchResults as $result) : ?>
-
+            <?php
+            for ($i = 0; $i < count($appIds); $i++) {
+                $result = $appointment->getFullByAppointmentId($appIds[$i]); ?>
                 <div class="card rounded-4 border border-info" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title text-capitalize">
-                            <?php echo "Dr. " . $result['first_name'] . " " . $result['last_name']; ?>
+                            <?php echo "Dr. " . $result['doctor_name']; ?>
                         </h5>
                         <p class="card-text">
                             <?php
@@ -196,45 +207,20 @@ $_SESSION['compare'] = array();
                                     }
                                     echo $url;
                                     ?>" target="_blank" class="card-link btn btn-primary">Book</a>
-
-
-                        <button class="card-link btn btn-secondary" onclick="addToCompare()" data-compare="<?php echo $result['appointment_id'] ?>">Compare</button>
                     </div>
                 </div>
-            <?php endforeach; ?>
-            <script>
-                // reset the compare array on page load
-                localStorage.setItem('compare', JSON.stringify([]));
+            <?php }
 
-                function addToCompare() {
-                    var id = event.target.getAttribute('data-compare');
-                    var compare = localStorage.getItem('compare');
-                    if (compare == null) {
-                        compare = [];
-                    } else {
-                        compare = JSON.parse(compare);
-                    }
-                    if (compare.includes(id)) {
-                        alert("Already added to compare");
-                    } else {
-                        compare.push(id);
-                        localStorage.setItem('compare', JSON.stringify(compare));
-                        alert("Added to compare");
-                    }
-                    var show_result = document.getElementById('show_result');
-                    show_result.style.display = 'block';
-
-                    var link = document.getElementById('link');
-                    link.href = 'compare.php?compare=' + JSON.stringify(compare);
-                }
-            </script>
-        </div>
-        <div class='text-center mt-5' id="show_result" style="display: none;">
-            <a id="link" href='compare.php' class='btn btn-primary'>Show results</a>
+            ?>
         </div>
     </div>
+
+
+
     <!-- Back to Top -->
-    <a href=" #" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -247,8 +233,20 @@ $_SESSION['compare'] = array();
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="lib/twentytwenty/jquery.event.move.js"></script>
     <script src="lib/twentytwenty/jquery.twentytwenty.js"></script>
+
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <!-- <script src="js/searchBAR.js"></script> -->
+    <script>
+        const myDiv = document.getElementById("sumsearch");
+        const myForm = document.getElementById("searchform");
+        // alert("SAdkfsfj")
+        myDiv.addEventListener("click", function() {
+            myForm.submit();
+            // console.log(myDiv)
+        });
+    </script>
 </body>
 
 </html>

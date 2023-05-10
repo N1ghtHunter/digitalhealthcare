@@ -51,7 +51,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
 
 
     <link href="../css/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../css/clinic.css">
 
     <!-- <link rel="stylesheet" href="../css/clinic.css"> -->
 

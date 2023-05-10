@@ -55,7 +55,7 @@ if (isset($_SESSION['allow_online_payment'])) {
 
 <head>
     <meta charset="utf-8">
-    <title>Formicon-Flat Forms Pack</title>
+    <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.2">
     <link rel="stylesheet" href="../icons/styles.css">
     <!-- <link rel="stylesheet" href="style2.css"> -->
@@ -123,7 +123,7 @@ if (isset($_SESSION['allow_online_payment'])) {
     <div class="container">
         <div class="form-wrapper">
             <form action="../api/doctor/signup.php" method="post" class="fcorn-register container">
-                <h2 class="register-info">Welcome to the doctor SIGN UP page</h2>
+                <h2 class="register-info">Doctors Sign Up</h2>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="first_name" class="form-label">First Name</label>

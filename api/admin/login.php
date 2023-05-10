@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: http://localhost/admin/login.php");
         exit();
     } else {
-
         $_SESSION['id'] = $result->id;
         $_SESSION['logged_in'] = true;
         $_SESSION['role'] = "admin";
+        $_SESSION['username'] = $result->username;
         header("Location: ../../admin/home.php");
         exit();
     }
