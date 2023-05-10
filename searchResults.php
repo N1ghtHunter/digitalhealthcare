@@ -86,7 +86,7 @@ $searchResults = $_SESSION['searchResults'];
             <a href="#searchform" class="btn text-dark"><i class="fa fa-search"></i></a>
             <!-- <a href="appointment.html" class="btn btn-primary py-2 px-4 ms-3">Appointment</a> -->
             <?php if (isset($_SESSION['patient'])) : ?>
-                <a href="profile.php" class="btn btn-primary py-2 px-4 ms-3">Profile</a>
+                <a href="viewprofile.php" class="btn btn-primary py-2 px-4 ms-3">Profile</a>
                 <form action="api/shared/logout.php" method="POST">
                     <button type="submit" class="btn btn-secondary py-2 px-4 ms-3">Logout</button>
                 </form>

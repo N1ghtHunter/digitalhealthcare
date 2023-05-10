@@ -156,8 +156,38 @@ if (isset($_SESSION['allow_online_payment'])) {
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3">
-                        <label for="state" class="form-label">State</label>
-                        <input type="text" name="state" class="form-control" id="state" value="<?php echo $state; ?>" required>
+                        <label for="state" class="form-label">City</label>
+                        <!-- <input type="text" name="state" class="form-control" id="state" value" required> -->
+                        <select name="state" class="form-select" id="state">
+                            <option value="" selected disabled>Select a governorate</option>
+                            <option value="Alexandria">Alexandria</option>
+                            <option value="Aswan">Aswan</option>
+                            <option value="Asyut">Asyut</option>
+                            <option value="Beheira">Beheira</option>
+                            <option value="Beni Suef">Beni Suef</option>
+                            <option value="Cairo">Cairo</option>
+                            <option value="Dakahlia">Dakahlia</option>
+                            <option value="Damietta">Damietta</option>
+                            <option value="Faiyum">Faiyum</option>
+                            <option value="Gharbia">Gharbia</option>
+                            <option value="Giza">Giza</option>
+                            <option value="Ismailia">Ismailia</option>
+                            <option value="Kafr El Sheikh">Kafr El Sheikh</option>
+                            <option value="Luxor">Luxor</option>
+                            <option value="Matrouh">Matrouh</option>
+                            <option value="Minya">Minya</option>
+                            <option value="Monufia">Monufia</option>
+                            <option value="New Valley">New Valley</option>
+                            <option value="North Sinai">North Sinai</option>
+                            <option value="Port Said">Port Said</option>
+                            <option value="Qalyubia">Qalyubia</option>
+                            <option value="Qena">Qena</option>
+                            <option value="Red Sea">Red Sea</option>
+                            <option value="Sharqia">Sharqia</option>
+                            <option value="Sohag">Sohag</option>
+                            <option value="South Sinai">South Sinai</option>
+                            <option value="Suez">Suez</option>
+                        </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="area" class="form-label">Area</label>
@@ -222,7 +252,7 @@ if (isset($_SESSION['allow_online_payment'])) {
                         <select name="allow_insurance" class="form-select" id="insurance">
                             <option value="0" selected disabled>Choose...</option>
                             <option value="1">Yes</option>
-                            <option value="2">No</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
 
@@ -231,7 +261,7 @@ if (isset($_SESSION['allow_online_payment'])) {
                         <select name="allow_online_payment" class="form-select" id="online_payment">
                             <option value="0" selected disabled>Choose...</option>
                             <option value="1">Yes</option>
-                            <option value="2">No</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ $role;
 $logged_in;
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSION['role'] != "patient" || !isset($_SESSION['patient'])) {
     $_SESSION['logged_in'] = false;
+    header("Location: login.php");
 } else if ($_SESSION['logged_in'] == true && $_SESSION['role'] == "patient") {
     $id = $_SESSION['id'];
     $user = $_SESSION['patient'];
@@ -25,11 +26,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
 
 <head>
     <meta charset="utf-8">
-    <title>DentCare - Dental Clinic Website Template</title>
+    <title>Home</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -72,7 +70,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <a href="index.html" class="navbar-brand p-0">
-            <div class="pb-2 text-primary">
+            <div class="py-2 text-primary">
                 <img src="image/logo1.png" alt="logo" style="width: 200px;">
             </div>
         </a>
@@ -81,10 +79,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
-                <div class="nav-item dropdown">
+                <a href="home.php" class="nav-item nav-link active">Home</a>
+                <a href="all-reservation.php" class="nav-item nav-link">Reservations</a>
+                <!-- <a href="service.html" class="nav-item nav-link">Service</a> -->
+                <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
                         <a href="price.html" class="dropdown-item">Pricing Plan</a>
@@ -93,12 +91,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
                         <a href="appointment.html" class="dropdown-item">Appointment</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="contact.html" class="nav-item nav-link">Contact</a> -->
             </div>
-            <a href="#searchform" class="btn text-dark"><i class="fa fa-search"></i></a>
+            <!-- <a href="#searchform" class="btn text-dark"><i class="fa fa-search"></i></a> -->
             <!-- <a href="appointment.html" class="btn btn-primary py-2 px-4 ms-3">Appointment</a> -->
             <?php if (isset($_SESSION['patient'])) : ?>
-                <a href="profile.php" class="btn btn-primary py-2 px-4 ms-3">Profile</a>
+                <a href="viewprofile.php" class="btn btn-primary py-2 px-4 ms-3">Profile</a>
                 <form action="api/shared/logout.php" method="POST">
                     <button type="submit" class="btn btn-secondary py-2 px-4 ms-3">Logout</button>
                 </form>
@@ -187,17 +185,32 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
                     <div class="slectsearch">
                         <img class="sully_img18" src="image/istethoscope.png" alt=" ">
                         <select name="doc_specialty" id="dr-specialty">
-
-                            <option value=""> </option>
-                            <option value="Dermatology">Dermatology (Skin)</option>
-                            <option value="Dentistry">Dentistry (Teeth)</option>
-                            <option value="Psychiatry">Psychiatry (Mental)</option>
-                            <option value="Pediatrics ">Pediatrics and New Born (Child)</option>
-                            <option value="Neurology">Neurology (Brain & Nerves)</option>
-                            <option value="Orthopedics">Orthopedics (Bones)</option>
-                            <option value="Gynaecology and Infertility">Gynaecology and Infertility</option>
-                            <option value="Ear, Nose and Throat">Ear, Nose and Throat</option>
-                            <option value="Cardiology and Vascular Disease">Cardiology and Vascular Disease (Heart)
+                            <option value="" selected>None</option>
+                            <option value="allergy">Allergy and Immunology</option>
+                            <option value="anesthesiology">Anesthesiology</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="dermatology">Dermatology</option>
+                            <option value="emergency">Emergency Medicine</option>
+                            <option value="endocrinology">Endocrinology</option>
+                            <option value="gastroenterology">Gastroenterology</option>
+                            <option value="hematology">Hematology</option>
+                            <option value="infectious">Infectious Disease</option>
+                            <option value="internal">Internal Medicine</option>
+                            <option value="neonatology">Neonatology</option>
+                            <option value="nephrology">Nephrology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="obstetrics">Obstetrics and Gynecology</option>
+                            <option value="oncology">Oncology</option>
+                            <option value="ophthalmology">Ophthalmology</option>
+                            <option value="orthopedic">Orthopedic Surgery</option>
+                            <option value="otolaryngology">Otolaryngology</option>
+                            <option value="pediatric">Pediatrics</option>
+                            <option value="physical">Physical Medicine and Rehabilitation</option>
+                            <option value="psychiatry">Psychiatry</option>
+                            <option value="pulmonology">Pulmonology</option>
+                            <option value="radiology">Radiology</option>
+                            <option value="rheumatology">Rheumatology</option>
+                            <option value="urology">Urology</option>
                             </option>
                         </select>
                     </div>
@@ -208,11 +221,34 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
                     <div class="slectsearch">
                         <img class="sully_img18" src="image/location.png" alt=" ">
                         <select name="doc_city" id="dr-doc_city">
-
-                            <option value=""> </option>
-                            <option value="dave">Dave</option>
-                            <option value="pumpernickel">Pumpernickel</option>
-                            <option value="reeses">Reeses</option>
+                            <option value="" selected disabled>Select a governorate</option>
+                            <option value="Alexandria">Alexandria</option>
+                            <option value="Aswan">Aswan</option>
+                            <option value="Asyut">Asyut</option>
+                            <option value="Beheira">Beheira</option>
+                            <option value="Beni Suef">Beni Suef</option>
+                            <option value="Cairo">Cairo</option>
+                            <option value="Dakahlia">Dakahlia</option>
+                            <option value="Damietta">Damietta</option>
+                            <option value="Faiyum">Faiyum</option>
+                            <option value="Gharbia">Gharbia</option>
+                            <option value="Giza">Giza</option>
+                            <option value="Ismailia">Ismailia</option>
+                            <option value="Kafr El Sheikh">Kafr El Sheikh</option>
+                            <option value="Luxor">Luxor</option>
+                            <option value="Matrouh">Matrouh</option>
+                            <option value="Minya">Minya</option>
+                            <option value="Monufia">Monufia</option>
+                            <option value="New Valley">New Valley</option>
+                            <option value="North Sinai">North Sinai</option>
+                            <option value="Port Said">Port Said</option>
+                            <option value="Qalyubia">Qalyubia</option>
+                            <option value="Qena">Qena</option>
+                            <option value="Red Sea">Red Sea</option>
+                            <option value="Sharqia">Sharqia</option>
+                            <option value="Sohag">Sohag</option>
+                            <option value="South Sinai">South Sinai</option>
+                            <option value="Suez">Suez</option>
                         </select>
                     </div>
                 </div>
@@ -221,13 +257,14 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
                     <label for="dr-area" class="topword">in thes area</label>
                     <div class="slectsearch">
                         <img class="sully_img18" src="image/streets.png" alt=" ">
-                        <select name="dr-area" id="dr-area">
-
+                        <!-- <img class="sully_img18" src="image/doctor.png" alt=" "> -->
+                        <input type="text" class="inputname" name="dr-area" placeholder="Area" value="">
+                        <!-- <select name="dr-area" id="dr-area">
                             <option value=""> </option>
                             <option value="dave">Dave</option>
                             <option value="pumpernickel">Pumpernickel</option>
                             <option value="reeses">Reeses</option>
-                        </select>
+                        </select> -->
                     </div>
                 </div>
 
