@@ -1,6 +1,5 @@
 <?php
 
-
 include_once 'user.php';
 include_once __DIR__ . '/../shared/mailer.php';
 
@@ -415,5 +414,35 @@ class  Patient extends User
     } else {
       return false;
     }
+
+    public function SelsctAllPatient()
+    {
+        $patients = array();
+
+        // Build query
+        $query = "SELECT DISTINCT * FROM patient";
+        $stmt = $this->conn->prepare($query);
+        // Execute statement
+        $stmt->execute();
+
+        // loop through rows and add to doctors array
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $patients[] = $row;
+        }
+
+        return $patients;
+    }
+    public function deletePatient($id)
+    {
+        // Build query
+        $query = "DELETE FROM patient WHERE id like :id";
+        $stmt = $this->conn->prepare($query);
+        // bind parameters
+        $stmt->bindParam(":id", $id);
+        // Execute statement
+        $stmt->execute();
+        return true;
+    }
+
   }
 }

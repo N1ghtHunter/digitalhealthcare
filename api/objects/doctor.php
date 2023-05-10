@@ -184,6 +184,35 @@ class  Doctor extends User
             return false;
         }
     }
+
+    public function SelsctAllDoctor()
+    {
+        $doctors = array();
+
+        // Build query
+        $query = "SELECT DISTINCT * FROM doctor";
+        $stmt = $this->conn->prepare($query);
+        // Execute statement
+        $stmt->execute();
+
+        // loop through rows and add to doctors array
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $doctors[] = $row;
+        }
+
+        return $doctors;
+    }
+    public function deleteDoctor($id)
+    {
+        // Build query
+        $query = "DELETE FROM doctor WHERE id like :id";
+        $stmt = $this->conn->prepare($query);
+        // bind parameters
+        $stmt->bindParam(":id", $id);
+        // Execute statement
+        $stmt->execute();
+        return true;
+
     public function update($id, $first_name, $last_name, $phone_number, $years_of_exp, $allow_online_payment, $allow_insurance)
     {
         $query = "UPDATE " . $this->table_name . " SET first_name = ?, last_name = ?, phone_number = ?, years_of_exp = ?, allow_online_payment = ?, allow_insurance = ? WHERE id = ?";
