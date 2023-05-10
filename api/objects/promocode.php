@@ -1,6 +1,6 @@
 <?php
 include_once '../config/database.php';
-include_once '../shared/mailer.php';
+include_once __DIR__ . '/../shared/mailer.php';
 
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function

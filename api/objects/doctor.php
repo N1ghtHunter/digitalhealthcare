@@ -1,5 +1,6 @@
 <?php
 
+
 include_once 'user.php';
 
 class  Doctor extends User
@@ -180,6 +181,23 @@ class  Doctor extends User
             }
         } else {
             echo "error";
+            return false;
+        }
+    }
+    public function update($id, $first_name, $last_name, $phone_number, $years_of_exp, $allow_online_payment, $allow_insurance)
+    {
+        $query = "UPDATE " . $this->table_name . " SET first_name = ?, last_name = ?, phone_number = ?, years_of_exp = ?, allow_online_payment = ?, allow_insurance = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $first_name);
+        $stmt->bindParam(2, $last_name);
+        $stmt->bindParam(3, $phone_number);
+        $stmt->bindParam(4, $years_of_exp);
+        $stmt->bindParam(5, $allow_online_payment);
+        $stmt->bindParam(6, $allow_insurance);
+        $stmt->bindParam(7, $id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
             return false;
         }
     }
