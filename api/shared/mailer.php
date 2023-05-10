@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
-require '../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 //Create an instance; passing `true` enables exceptions
 

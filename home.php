@@ -11,6 +11,7 @@ $role;
 $logged_in;
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSION['role'] != "patient" || !isset($_SESSION['patient'])) {
     $_SESSION['logged_in'] = false;
+    header("Location: login.php");
 } else if ($_SESSION['logged_in'] == true && $_SESSION['role'] == "patient") {
     $id = $_SESSION['id'];
     $user = $_SESSION['patient'];
@@ -25,11 +26,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == false || $_SESSI
 
 <head>
     <meta charset="utf-8">
-    <title>DentCare - Dental Clinic Website Template</title>
+    <title>Home</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 

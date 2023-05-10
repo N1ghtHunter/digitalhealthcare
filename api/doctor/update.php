@@ -11,20 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     return;
 }
 session_start();
-$database = new Database();
+$database = Database::getInstance();
 $db = $database->getConnection();
 
 $doctor = new Doctor($db);
 $id = $_SESSION['doctor']['id'];
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
-$email = $_POST['email'];
 $phone_number = $_POST['phone_number'];
-$gender = $_POST['gender'];
-$specialty = $_POST['specialty'];
-$state = $_POST['state'];
-$area = $_POST['area'];
 $years_of_exp = $_POST['years_of_exp'];
 $allow_online_payment = $_POST['allow_online_payment'];
 $allow_insurance = $_POST['allow_insurance'];
-$password = $_POST['password'];
+
+if (empty($first_name) || empty($last_name) || empty($phone_number) || empty($years_of_exp) || empty($allow_online_payment) || empty($allow_insurance)) {
+    header("Location: ../../doctor/viewprofile.php");
+    exit();
+}
+
+$doctor->update($id, $first_name, $last_name, $phone_number, $years_of_exp, $allow_online_payment, $allow_insurance);
+$_SESSION['doctor'] = $doctor->readOne($id);
+header("Location: ../../doctor/viewprofile.php");
+exit();
